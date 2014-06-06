@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="timeConverter_Timezones">
+        <item>GMT</item> <item>TWO</item> <item>TRE</item>
+    </string-array>
+
+</resources>

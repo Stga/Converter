@@ -1,0 +1,130 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+
+    tools:context="com.allizgwats.converter.converter_activity.TimeConverterFragment">
+
+    <!-- Text views and "from" timezone for displaying conversions -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timeConverter_inputSectionIdentifier_from"
+        android:layout_alignLeft="@+id/timeConverter_llayoutFrom"
+        android:layout_alignBottom="@+id/timeConverter_llayoutFrom"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="monospace"/>
+
+    <LinearLayout
+        android:id="@+id/timeConverter_llayoutFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="320dp"
+        android:layout_marginLeft="10dp">
+
+        <EditText
+            android:id="@+id/timeConverter_hoursFrom"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="@string/timeConverter_defaultUiTimes"
+            android:textSize="40sp"
+            android:minEms="1"
+            android:fontFamily="monospace"
+            android:imeOptions="actionDone"/>
+
+        <TextView
+            android:id="@+id/timeConverter_dividerFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/timeConverter_timesDivider"
+            android:textSize="40sp"
+            android:fontFamily="monospace"/>
+
+        <EditText
+            android:id="@+id/timeConverter_minutesFrom"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="@string/timeConverter_defaultUiTimes"
+            android:textSize="40sp"
+            android:fontFamily="monospace"
+            android:imeOptions="actionDone"/>
+
+        <Spinner
+            android:id="@+id/timeConverter_timezoneFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:entries="@array/timeConverter_Timezones"/>
+
+    </LinearLayout>
+
+
+    <!-- Text views and "to" timezone for displaying conversions -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timeConverter_inputSectionIdentifier_to"
+        android:layout_alignLeft="@+id/timeConverter_llayoutTo"
+        android:layout_alignBottom="@+id/timeConverter_llayoutTo"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="monospace"/>
+
+    <LinearLayout
+        android:id="@+id/timeConverter_llayoutTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="10dp">
+
+        <EditText
+            android:id="@+id/timeConverter_hoursTo"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="@string/timeConverter_defaultUiTimes"
+            android:textSize="40sp"
+            android:fontFamily="monospace"
+            android:clickable="false"
+            android:longClickable="false"
+            android:imeOptions="actionDone"/>
+
+        <TextView
+            android:id="@+id/timeConverter_dividerTo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/timeConverter_timesDivider"
+            android:textSize="40sp"
+            android:fontFamily="monospace"/>
+
+        <EditText
+            android:id="@+id/timeConverter_minutesTo"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="@string/timeConverter_defaultUiTimes"
+            android:textSize="40sp"
+            android:fontFamily="monospace"
+            android:clickable="false"
+            android:longClickable="false"
+            android:imeOptions="actionDone"/>
+
+        <Spinner
+            android:id="@+id/timeConverter_timezoneTo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:entries="@array/timeConverter_Timezones"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
