@@ -11,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,15 +32,16 @@ public class TimeConverterFragment extends Fragment {
     /**
      * The gui elements to be manipulated by user
      */
-    private EditText hoursFrom;    private EditText minutesFrom;
-    private EditText hoursTo;      private EditText minutesTo;
-    private Spinner timezonesFrom; private Spinner timezonesTo;
+    private EditText hoursFrom;     private EditText minutesFrom;
+    private EditText hoursTo;       private EditText minutesTo;
+    private Button   timezonesFrom; private Button   timezonesTo;
 
     /**
      * Listeners for the edit texts. These are implemented in a private inner class
      */
     private CustomTextWatcher hoursTextWatcher;
     private CustomTextWatcher minutesTextWatcher;
+    private String timezoneIdentifierFlag; //Identifer for setting which timezone is being selected
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -80,8 +80,8 @@ public class TimeConverterFragment extends Fragment {
      * Attach listeners to the following gui elements
      * Hours From EditText
      * Minutes From EditText
-     * Timezone From Spinner
-     * Timezone To Spinner
+     * Timezone From Button
+     * Timezone To Button
      * @param rootView The inflated TimeConverterFragment that will be displayed to the user. This
      *                 contains all views of the TimeConverterFragment layout.
      */
@@ -96,11 +96,11 @@ public class TimeConverterFragment extends Fragment {
         minutesTextWatcher = new CustomTextWatcher(minutesFrom);
         minutesFrom.addTextChangedListener(minutesTextWatcher);
 
-        timezonesFrom = (Spinner) rootView.findViewById(R.id.timeConverter_timezoneFrom);
-        timezonesFrom.setOnItemSelectedListener(timezoneSelectedListener);
+        timezonesFrom = (Button) rootView.findViewById(R.id.timeConverter_timezoneFrom);
+        timezonesFrom.setOnClickListener(showDefaultTimezoneListener);
 
-        timezonesTo = (Spinner) rootView.findViewById(R.id.timeConverter_timezoneTo);
-        timezonesTo.setOnItemSelectedListener(timezoneSelectedListener);
+        timezonesTo = (Button) rootView.findViewById(R.id.timeConverter_timezoneTo);
+        timezonesTo.setOnClickListener(showDefaultTimezoneListener);
 
         //Instantiate the un-clickable To pane items so they can be set in other methods
         hoursTo = (EditText) rootView.findViewById(R.id.timeConverter_hoursTo);
@@ -151,17 +151,19 @@ public class TimeConverterFragment extends Fragment {
     };
 
     /**
-     * Adapter for setting timezone variables to the items the user chooses in the timezone spinners
+     * Listener for displaying the default region selection list and setting the flag
+     * to either the from or to to identify which variable should be assigned to.
      */
-    AdapterView.OnItemSelectedListener timezoneSelectedListener =
-            new AdapterView.OnItemSelectedListener() {
+    View.OnClickListener showDefaultTimezoneListener = new View.OnClickListener() {
         @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-            calculateTimezoneDifferences();
-        }
+        public void onClick(View view) {
+            timezoneIdentifierFlag = view.getId()==R.id.timeConverter_timezoneFrom ? "From" : "To";
+            TextView timezoneIdentifierTextView =
+                    (TextView) getView().findViewById(R.id.timeConverter_timezoneSelectorTextView);
+            timezoneIdentifierTextView.setText("Selecting " + timezoneIdentifierFlag + "timezone");
 
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {}
+            //Show the default list of timezones in the timezone selector ListView
+        }
     };
 
     /**
