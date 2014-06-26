@@ -6,7 +6,4 @@
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="#cccc"
-    tools:context="com.allizgwats.converter.NavigationDrawerFragment"
-
-
-    />
+    tools:context="com.allizgwats.converter.NavigationDrawerFragment"/>

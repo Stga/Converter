@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +34,10 @@ public class TimeConverterFragment extends Fragment {
     /**
      * The gui elements to be manipulated by user
      */
-    private EditText hoursFrom;     private EditText minutesFrom;
-    private EditText hoursTo;       private EditText minutesTo;
-    private Button   timezonesFrom; private Button   timezonesTo;
+    private EditText hoursFrom;        private EditText minutesFrom;
+    private EditText hoursTo;          private EditText minutesTo;
+    private Button   timezonesFrom;    private Button   timezonesTo;
+    private ListView timezoneSelector; private ArrayAdapter<String> timezoneAdapter;
 
     /**
      * Listeners for the edit texts. These are implemented in a private inner class
@@ -105,6 +108,14 @@ public class TimeConverterFragment extends Fragment {
         //Instantiate the un-clickable To pane items so they can be set in other methods
         hoursTo = (EditText) rootView.findViewById(R.id.timeConverter_hoursTo);
         minutesTo = (EditText) rootView.findViewById(R.id.timeConverter_minutesTo);
+
+        timezoneSelector = (ListView) rootView.findViewById
+                (R.id.timeConverter_timezoneSelectorListView);
+        timezoneAdapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.time_converter_listview_item);
+        timezoneSelector.setAdapter(timezoneAdapter);
+
+        //TODO style the timezone buttons
     }
 
 
@@ -160,9 +171,23 @@ public class TimeConverterFragment extends Fragment {
             timezoneIdentifierFlag = view.getId()==R.id.timeConverter_timezoneFrom ? "From" : "To";
             TextView timezoneIdentifierTextView =
                     (TextView) getView().findViewById(R.id.timeConverter_timezoneSelectorTextView);
-            timezoneIdentifierTextView.setText("Selecting " + timezoneIdentifierFlag + "timezone");
+            timezoneIdentifierTextView.setText("|-Selecting " + timezoneIdentifierFlag + " Timezone-|");
+            //timezoneIdentifierTextView.setPaintFlags(timezoneIdentifierTextView.getPaintFlags()
+            //        |   Paint.UNDERLINE_TEXT_FLAG);
 
             //Show the default list of timezones in the timezone selector ListView
+            String[] timezoneList = getResources()
+                    .getStringArray(R.array.timeConverter_timezoneListDefaultLevel);
+
+            timezoneAdapter.clear();
+
+            for(int i=0; i<timezoneList.length; i++) {
+                timezoneAdapter.add(timezoneList[i]);
+            }
+
+            timezoneAdapter.notifyDataSetChanged();
+            timezoneSelector.setVisibility(View.VISIBLE);
+
         }
     };
 

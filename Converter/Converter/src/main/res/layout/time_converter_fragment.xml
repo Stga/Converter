@@ -14,10 +14,11 @@
         android:id="@+id/timeConverter_timezoneSelectorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/timeConverter_timezoneSelectorListView"
+        android:layout_centerHorizontal="true"
         android:fontFamily="monospace"/>
 
     <!-- List view that will contain timezone information the user can select -->
+    <!--Holo Light background colour is used for divider i.e. #fff3f3f3-->
     <ListView
         android:id="@+id/timeConverter_timezoneSelectorListView"
         android:layout_width="wrap_content"
@@ -26,7 +27,9 @@
         android:layout_marginBottom="178dp"
         android:layout_alignLeft="@+id/timeConverter_llayoutFrom"
         android:layout_alignRight="@+id/timeConverter_llayoutFrom"
-        android:fontFamily="monospace">
+        android:fontFamily="monospace"
+        android:divider="#fff3f3f3"
+        android:dividerHeight="10dp">
     </ListView>
 
     <!-- Text views and "from" timezone for displaying conversions -->
