@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+    <!-- use this for transparent -->
+    <!-- <solid android:color="#00000000" /> -->
+    <!-- use this for time_converter_timezone_from_button_style background colour -->
+    <solid android:color="#FFFFFF" />
+    <stroke android:width="1dip" android:color="@android:color/secondary_text_dark" />
+    <corners android:radius="10dp"></corners>
+</shape>

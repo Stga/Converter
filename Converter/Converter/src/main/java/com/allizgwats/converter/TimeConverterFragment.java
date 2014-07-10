@@ -114,14 +114,11 @@ public class TimeConverterFragment extends Fragment {
         timezoneAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.time_converter_listview_item);
         timezoneSelector.setAdapter(timezoneAdapter);
-
-        //TODO style the timezone buttons
     }
 
 
     /**
-     * Calculate the differences between selected timezones using users inserted hours/minutes
-     * TODO
+     * TODO Calculate the differences between selected timezones using users inserted hours/minutes
      */
     private void calculateTimezoneDifferences() {
         Calendar cal = new GregorianCalendar(Time.YEAR, Time.MONTH, Time.MONTH_DAY);
@@ -171,9 +168,8 @@ public class TimeConverterFragment extends Fragment {
             timezoneIdentifierFlag = view.getId()==R.id.timeConverter_timezoneFrom ? "From" : "To";
             TextView timezoneIdentifierTextView =
                     (TextView) getView().findViewById(R.id.timeConverter_timezoneSelectorTextView);
-            timezoneIdentifierTextView.setText("|-Selecting " + timezoneIdentifierFlag + " Timezone-|");
-            //timezoneIdentifierTextView.setPaintFlags(timezoneIdentifierTextView.getPaintFlags()
-            //        |   Paint.UNDERLINE_TEXT_FLAG);
+            timezoneIdentifierTextView.setText
+                    ("|-Select " + timezoneIdentifierFlag + " Timezone-|");
 
             //Show the default list of timezones in the timezone selector ListView
             String[] timezoneList = getResources()

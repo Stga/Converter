@@ -1,8 +1,8 @@
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eaeaea"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -14,23 +14,20 @@
         android:id="@+id/timeConverter_timezoneSelectorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="monospace"/>
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"/>
 
-    <!-- List view that will contain timezone information the user can select -->
-    <!--Holo Light background colour is used for divider i.e. #fff3f3f3-->
-    <ListView
-        android:id="@+id/timeConverter_timezoneSelectorListView"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="178dp"
-        android:layout_alignLeft="@+id/timeConverter_llayoutFrom"
-        android:layout_alignRight="@+id/timeConverter_llayoutFrom"
-        android:fontFamily="monospace"
-        android:divider="#fff3f3f3"
-        android:dividerHeight="10dp">
-    </ListView>
+        <!--List view that will contain timezone information the user can select -->
+        <!--Holo Light background colour is used for divider i.e. #fff3f3f3-->
+        <ListView
+            android:id="@+id/timeConverter_timezoneSelectorListView"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:padding="5dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/listview_border_shape"
+            android:layout_centerHorizontal="true">
+        </ListView>
 
     <!-- Text views and "from" timezone for displaying conversions -->
     <TextView
@@ -47,18 +44,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="320dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginTop="420dp"
+        android:layout_alignLeft="@id/timeConverter_llayoutTimezoneSelectors">
 
         <EditText
             android:id="@+id/timeConverter_hoursFrom"
             android:layout_width="70dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="number"
             android:text="@string/timeConverter_defaultUiTimes"
             android:textSize="40sp"
             android:minEms="1"
-            android:fontFamily="monospace"
             android:imeOptions="actionDone"/>
 
         <TextView
@@ -72,25 +68,58 @@
         <EditText
             android:id="@+id/timeConverter_minutesFrom"
             android:layout_width="70dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="number"
             android:text="@string/timeConverter_defaultUiTimes"
             android:textSize="40sp"
-            android:fontFamily="monospace"
             android:imeOptions="actionDone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timeConverter_llayoutTimezoneSelectors"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignRight="@id/timeConverter_timezoneSelectorListView"
+        android:layout_alignLeft="@id/timeConverter_timezoneSelectorListView"
+        android:layout_below="@id/timeConverter_timezoneSelectorListView"
+        android:background="@drawable/listview_border_shape">
+
+        <!--TODO STYLE THE BUTTONS FOR SELECTING TIMEZONES-->
+        <Button
+            android:id="@+id/timeConverter_timezoneTo"
+            android:text="To Timezone"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.6"
+            android:background="@drawable/time_converter_tz_to_button_style"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+        />
 
         <Button
             android:id="@+id/timeConverter_timezoneFrom"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="40dp"
-            android:minWidth="110dp"
-            android:text="@string/timeConverter_timezoneSelectorIdentifier"
-            android:fontFamily="monospace"
-            android:maxLines="1"
-            android:gravity="left|center_vertical"/>
-
-    </LinearLayout>
+            android:text="From Timezone"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.6"
+            android:background="@drawable/time_converter_tz_from_button_style"
+            android:layout_marginRight="0dp"
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="center_vertical"
+        />
+        </LinearLayout>
 
 
     <!-- Text views and "to" timezone for displaying conversions -->
@@ -99,8 +128,8 @@
         android:layout_height="wrap_content"
         android:text="@string/timeConverter_inputSectionIdentifier_to"
         android:layout_alignLeft="@+id/timeConverter_llayoutTo"
-        android:layout_alignBottom="@+id/timeConverter_llayoutTo"
-        android:layout_marginBottom="50dp"
+        android:layout_alignBottom="@id/timeConverter_llayoutTo"
+        android:layout_marginBottom="40dp"
         android:fontFamily="monospace"/>
 
     <LinearLayout
@@ -108,51 +137,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginTop="430dp"
+        android:layout_alignRight="@id/timeConverter_llayoutTimezoneSelectors">
 
-        <EditText
+        <!-- TODO STYLE THE OUTPUT TEXT -->
+        <TextView
             android:id="@+id/timeConverter_hoursTo"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:inputType="number"
             android:text="@string/timeConverter_defaultUiTimes"
             android:textSize="40sp"
-            android:fontFamily="monospace"
             android:clickable="false"
             android:longClickable="false"
             android:imeOptions="actionDone"/>
 
         <TextView
             android:id="@+id/timeConverter_dividerTo"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:text="@string/timeConverter_timesDivider"
             android:textSize="40sp"
             android:fontFamily="monospace"/>
 
-        <EditText
+        <TextView
             android:id="@+id/timeConverter_minutesTo"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:inputType="number"
             android:text="@string/timeConverter_defaultUiTimes"
             android:textSize="40sp"
-            android:fontFamily="monospace"
             android:clickable="false"
             android:longClickable="false"
             android:imeOptions="actionDone"/>
-
-        <Button
-            android:id="@+id/timeConverter_timezoneTo"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="40dp"
-            android:minWidth="110dp"
-            android:text="@string/timeConverter_timezoneSelectorIdentifier"
-            android:fontFamily="monospace"
-            android:maxLines="1"
-            android:gravity="left|center_vertical"/>
 
     </LinearLayout>
 
