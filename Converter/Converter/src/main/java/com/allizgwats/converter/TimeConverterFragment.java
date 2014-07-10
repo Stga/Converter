@@ -35,7 +35,7 @@ public class TimeConverterFragment extends Fragment {
      * The gui elements to be manipulated by user
      */
     private EditText hoursFrom;        private EditText minutesFrom;
-    private EditText hoursTo;          private EditText minutesTo;
+    private TextView hoursTo;          private TextView minutesTo;
     private Button   timezonesFrom;    private Button   timezonesTo;
     private ListView timezoneSelector; private ArrayAdapter<String> timezoneAdapter;
 
@@ -106,8 +106,8 @@ public class TimeConverterFragment extends Fragment {
         timezonesTo.setOnClickListener(showDefaultTimezoneListener);
 
         //Instantiate the un-clickable To pane items so they can be set in other methods
-        hoursTo = (EditText) rootView.findViewById(R.id.timeConverter_hoursTo);
-        minutesTo = (EditText) rootView.findViewById(R.id.timeConverter_minutesTo);
+        hoursTo = (TextView) rootView.findViewById(R.id.timeConverter_hoursTo);
+        minutesTo = (TextView) rootView.findViewById(R.id.timeConverter_minutesTo);
 
         timezoneSelector = (ListView) rootView.findViewById
                 (R.id.timeConverter_timezoneSelectorListView);
