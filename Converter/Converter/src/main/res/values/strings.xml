@@ -15,10 +15,11 @@
     <string name="action_settings">Settings</string>
 
     <!-- Time converter string resources -->
-    <string name="timeConverter_defaultUiTimes">00</string>
+    <string name="timeConverter_defaultFromUiTimes">00</string>
     <string name="timeConverter_timesDivider">:</string>
-    <string name="timeConverter_inputSectionIdentifier_to">To</string>
-    <string name="timeConverter_inputSectionIdentifier_from">From</string>
+    <string name="timeConverter_defaultToUiTime">00:00</string>
+    <string name="timeConverter_originalTimeIdentifierText">Timezone A</string>
+    <string name="timeConverter_convertedTimeIdentifierText">Timezone B</string>
     <string name="timeConverter_timezoneSelectorIdentifier">Timezone</string>
 
 </resources>
