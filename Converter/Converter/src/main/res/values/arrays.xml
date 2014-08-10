@@ -128,11 +128,8 @@
         <item>Bahrain</item>
         <item>Bangladesh</item>
         <item>Bhutan</item>
-        <item>Brunei Darussalam</item>
+        <item>Brunei</item>
         <item>Cambodia</item>
-        <item>China Hong Kong SAR</item>
-        <item>China Macau SAR</item>
-        <item>China Tibet</item>
         <item>China</item>
         <item>Cyprus</item>
         <item>Georgia</item>
@@ -148,7 +145,7 @@
         <item>Korea (South)</item>
         <item>Kuwait</item>
         <item>Kyrgyzstan</item>
-        <item>Lao PDR</item>
+        <item>Laos</item>
         <item>Lebanon</item>
         <item>Malaysia</item>
         <item>Maldives</item>
@@ -157,8 +154,6 @@
         <item>Nepal</item>
         <item>Oman</item>
         <item>Pakistan</item>
-        <item>Pakistan</item>
-        <item>Palestinian territories</item>
         <item>Philippines</item>
         <item>Qatar</item>
         <item>Russia</item>
@@ -262,220 +257,220 @@
     <!-- TODO i.e. using WAST instead of WAT etc..-->
     <!-- IDENTIFYING TIMEZONES START-->
     <!-- African Timezones Start-->
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Algeria">
+    <string-array name="timeConverter_timezoneListAfrica_Algeria">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Angola">
+    <string-array name="timeConverter_timezoneListAfrica_Angola">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Benin">
+    <string-array name="timeConverter_timezoneListAfrica_Benin">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Botswana">
+    <string-array name="timeConverter_timezoneListAfrica_Botswana">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_BurkinaFaso">
+    <string-array name="timeConverter_timezoneListAfrica_BurkinaFaso">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Burundi">
+    <string-array name="timeConverter_timezoneListAfrica_Burundi">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Cameroon">
+    <string-array name="timeConverter_timezoneListAfrica_Cameroon">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_CapeVerde">
+    <string-array name="timeConverter_timezoneListAfrica_CapeVerde">
         <item>Cape Verde Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_CentralAfricanRepublic">
+    <string-array name="timeConverter_timezoneListAfrica_CentralAfricanRepublic">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Chad">
+    <string-array name="timeConverter_timezoneListAfrica_Chad">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Comoros">
+    <string-array name="timeConverter_timezoneListAfrica_Comoros">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_CongoBrazzaville">
+    <string-array name="timeConverter_timezoneListAfrica_CongoBrazzaville">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_CongoKinshasa">
+    <string-array name="timeConverter_timezoneListAfrica_CongoKinshasa">
         <item>West Africa Time</item>
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_CotedIvoire">
+    <string-array name="timeConverter_timezoneListAfrica_CotedIvoire">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Djibouti">
+    <string-array name="timeConverter_timezoneListAfrica_Djibouti">
         <item>East Africa Time</item>
     </string-array>
 
     <!--TODO check if java implementation on android will update timezone to DST during Ramadan-->
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Egypt">
+    <string-array name="timeConverter_timezoneListAfrica_Egypt">
         <item>Egyptian Time(DST)</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_EquatorialGuinea">
+    <string-array name="timeConverter_timezoneListAfrica_EquatorialGuinea">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Eritrea">
+    <string-array name="timeConverter_timezoneListAfrica_Eritrea">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Ethiopia">
+    <string-array name="timeConverter_timezoneListAfrica_Ethiopia">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Gabon">
+    <string-array name="timeConverter_timezoneListAfrica_Gabon">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Gambia">
+    <string-array name="timeConverter_timezoneListAfrica_Gambia">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezoneGhana">
+    <string-array name="timeConverter_timezoneListAfrica_Ghana">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Guinea">
-        <item>Coordinated Universal TIme</item>
-    </string-array>
-
-    <string-array name="timeConverter_timezoneListAfricaTimezone_GuineaBissau">
+    <string-array name="timeConverter_timezoneListAfrica_Guinea">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Kenya">
+    <string-array name="timeConverter_timezoneListAfrica_GuineaBissau">
+        <item>Coordinated Universal Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAfrica_Kenya">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Lesotho">
+    <string-array name="timeConverter_timezoneListAfrica_Lesotho">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Liberia">
+    <string-array name="timeConverter_timezoneListAfrica_Liberia">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Libya">
+    <string-array name="timeConverter_timezoneListAfrica_Libya">
         <item>Libyan Time(DST)</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Madagascar">
+    <string-array name="timeConverter_timezoneListAfrica_Madagascar">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Malawi">
+    <string-array name="timeConverter_timezoneListAfrica_Malawi">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Mali">
+    <string-array name="timeConverter_timezoneListAfrica_Mali">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Mauritania">
+    <string-array name="timeConverter_timezoneListAfrica_Mauritania">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Mauritius">
+    <string-array name="timeConverter_timezoneListAfrica_Mauritius">
         <item>Mauritius Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Morocco">
+    <string-array name="timeConverter_timezoneListAfrica_Morocco">
         <item>Moroccan Time(DST)</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Mozambique">
+    <string-array name="timeConverter_timezoneListAfrica_Mozambique">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Namibia">
+    <string-array name="timeConverter_timezoneListAfrica_Namibia">
         <item>West Africa Time(DST)</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Niger">
+    <string-array name="timeConverter_timezoneListAfrica_Niger">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Nigeria">
+    <string-array name="timeConverter_timezoneListAfrica_Nigeria">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Rwanda">
+    <string-array name="timeConverter_timezoneListAfrica_Rwanda">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Senegal">
+    <string-array name="timeConverter_timezoneListAfrica_Senegal">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_SierraLeone">
+    <string-array name="timeConverter_timezoneListAfrica_SierraLeone">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Somalia">
+    <string-array name="timeConverter_timezoneListAfrica_Somalia">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_SouthAfrica">
+    <string-array name="timeConverter_timezoneListAfrica_SouthAfrica">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_SouthSudan">
+    <string-array name="timeConverter_timezoneListAfrica_SouthSudan">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Sudan">
+    <string-array name="timeConverter_timezoneListAfrica_Sudan">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Swaziland">
+    <string-array name="timeConverter_timezoneListAfrica_Swaziland">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Tanzania">
+    <string-array name="timeConverter_timezoneListAfrica_Tanzania">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Togo">
+    <string-array name="timeConverter_timezoneListAfrica_Togo">
         <item>Coordinated Universal Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Tunisia">
+    <string-array name="timeConverter_timezoneListAfrica_Tunisia">
         <item>West Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Uganda">
+    <string-array name="timeConverter_timezoneListAfrica_Uganda">
         <item>East Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Zambia">
+    <string-array name="timeConverter_timezoneListAfrica_Zambia">
         <item>Central Africa Time</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListAfricaTimezone_Zimbabwe">
+    <string-array name="timeConverter_timezoneListAfrica_Zimbabwe">
         <item>Central Africa Time</item>
     </string-array>
     <!-- African Timezones End-->
 
 
-    <!-- North American Timezones Start-->
-    <string-array name="timeConverter_timezoneListNorthAmericaCity_Canada">
+    <!-- American Timezones Start-->
+    <string-array name="timeConverter_timezoneListAmericas_Canada">
         <item>Atlantic Time(DST)</item>
         <item>Central Time(DST)</item>
         <item>Eastern Time(DST)</item>
@@ -484,14 +479,14 @@
         <item>Pacific Time(DST)</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListNorthAmericaCity_Mexico">
+    <string-array name="timeConverter_timezoneListAmericas_Mexico">
         <item>Central Time(DST)(m)</item>
         <item>Mountain Standard Time</item>
         <item>Mountain Time(DST)(m)</item>
         <item>Pacific Time(DST)(m)</item>
     </string-array>
 
-    <string-array name="timeConverter_timezoneListNorthAmericaCity_UnitedStates">
+    <string-array name="timeConverter_timezoneListAmericas_UnitedStates">
         <item>Alaskan Time(DST)</item>
         <item>Atlantic Time(DST)</item>
         <item>Central Time(DST)</item>
@@ -501,7 +496,67 @@
         <item>Mountain Time(DST)</item>
         <item>Pacific Time(DST)</item>
     </string-array>
-    <!-- North American Timezones End-->
+
+    <string-array name="timeConverter_timezoneListAmericas_Anguilla">
+        <item>Atlantic Standard Time</item>
+    </string-array>
+    
+    <string-array name="timeConverter_timezoneListAmericas_AntiguaAndBarbuda">
+        <item>Atlantic Standard Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Argentina">
+        <item>Argentine Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Aruba">
+        <item>Atlantic Standard Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Bahamas">
+        <item>Eastern Time(DST)</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Barbados">
+        <item>Atlantic Standard Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Belize">
+        <item>Central Standard Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Bermuda">
+        <item>Atlantic Time(DST)</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Bolivia">
+        <item>Atlantic Standard Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Brazil">
+        <item>Atlantic Standard Time</item>
+        <item>Fernando de Noronha Time</item>
+        <item>Brasilia Time(DST)</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_BritishVirginIslands">
+        <item>Atlantic Standard Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_CaymanIslands">
+        <item>Eastern Standard Time</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmericas_Chile">
+        <item>Chile Time(DST)</item>
+        <item>Easter Island Time(DST)</item>
+    </string-array>
+
+    <string-array name="timeConverter_timezoneListAmerica_Colombia">
+        <item>Colombia Time</item>
+    </string-array>
+    <!-- American Timezones End-->
+
 
 
     <!-- IDENTIFYING TIMEZONES END -->

@@ -314,13 +314,13 @@ public class TimeConverterFragment extends Fragment {
             timezonesListViewAdapter.clear();
 
             if(timezoneAIsSelected) {
-                for(int i=0; i<timezoneArrayA.length; i++) {
-                    timezonesListViewAdapter.add(timezoneArrayA[i]);
+                for(String timezoneArrayItem : timezoneArrayA) {
+                    timezonesListViewAdapter.add(timezoneArrayItem);
                 }
             }
             else {
-                for(int i=0; i<timezoneArrayB.length; i++) {
-                    timezonesListViewAdapter.add(timezoneArrayB[i]);
+                for(String timezoneArrayItem : timezoneArrayB) {
+                    timezonesListViewAdapter.add(timezoneArrayItem);
                 }
             }
 
