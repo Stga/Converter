@@ -20,6 +20,7 @@ public class TimezoneMapManager {
         setAsianTimezonesInMap();
         setAustralianOceaniaTimezoneInMap();
         setEuropeanTimezoneInMap();
+        setTimezoneReadableAndIdsInMap();
     }
 
     public HashMap<String, String[]> getTimezoneMap() {
@@ -394,7 +395,7 @@ public class TimezoneMapManager {
             "Poland"            , "Portugal"       , "Romania",
             "San Marino"        , "Serbia"         , "Slovakia",
             "Slovenia"          , "Spain"          , "Sweden",
-            "Switzerland"       , "United Kingdom" ,
+            "Switzerland"       , "United Kingdom"
         };
 
         String[] timezonesForEuropeanCountriesWithOneTimezone = new String[]
@@ -436,18 +437,100 @@ public class TimezoneMapManager {
         });
     }
 
-    /*
-    public static void main(String[] args) {
-        //String[] tz = java.util.TimeZone.getAvailableIDs();
-        java.util.TimeZone t = java.util.TimeZone.getTimeZone("EET");
+    public void setTimezoneReadableAndIdsInMap() {
+        String[] timezonesAsReadableArray = new String[]
+        {
+            "Afghanistan Time"         , "Alaskan Time(DST)"          , "Amazon Time",
+            "Aqtobe Time"              , "Arabia Standard Time"       , "Argentine Time",
+            "Armenia Time"             , "Atlantic Standard Time"     , "Atlantic Time(DST)",
+            "Azerbaijan Time"          , "Bangladesh Time"            , "Belarus Time",
+            "Bhutan Time"              , "Brasilia Time(DST)"         , "Brunei Time",
+            "Cape Verde Time"          , "Central Africa Time"        , "Central Europe Time",
+            "Central Indonesia Time"   , "Central Standard Time"      , "Central Standard Time(Aus)",
+            "Central Time(Aus)"        , "Central Time(DST)"          , "Central Time(DST)(m)",
+            "Chamorro Standard Time"   , "Chile Time(DST)"            , "China Standard Time",
+            "Choibalsan Time"          , "Chuuk Time"                 , "Colombia Time",
+            "Cook Island Time"         , "Coordinated Uni Time"       , "East Africa Time",
+            "East Greenland Time"      , "East Indonesia Time"        , "Easter Island Time(DST)",
+            "Eastern Europe Time"      , "Eastern Standard Time"      , "Eastern Standard Time(Aus)",
+            "Eastern Time(Aus)"        , "Eastern Time(DST)"          , "Egyptian Time(DST)",
+            "Fernando de Noronha Time" , "Fiji Time"                  , "Further-eastern European Time",
+            "Georgia Time"             , "Gilbert Island Time"        , "GMT",
+            "Gulf Standard Time"       , "Hawaii Standard Time"       , "Hawaii-Aleutian Time(DST)",
+            "Hovd Time"                , "India Standard Time"        , "Indochina Time",
+            "Iran Time(DST)"           , "Ireland Time"               , "Irkutsk",
+            "Israel Time"              , "Japan Standard Time"        , "Jordan Time",
+            "Kirgizstan Time"          , "Kosrae Time"                , "Krasnoyarsk Time",
+            "Libya(DST)"               , "Line Island Time"           , "Magadan Time",
+            "Malaysia Time"            , "Maldives Time"              , "Marshall Islands Time",
+            "Moroccan Time(DST)"       , "Moscow Time"                , "Mountain Standard Time",
+            "Mountain Time(DST)"       , "Mountain Time(DST)(m)"      , "Myanmar Time",
+            "Nauru Time"               , "Nepal Time"                 , "New Caledonia Time",
+            "New Zealand Time"         , "Newfoundland Time(DST)"     , "Niue Time",
+            "North Korea Time"         , "Omsk Time"                  , "Pacific Time(DST)",
+            "Pacific Time(DST)(m)"     , "Pakistan Time"              , "Palau Time",
+            "Papua New Guinea Time"    , "Philippines Time"           , "Phoenix Island Time",
+            "Pitcairn Standard Time"   , "Pohnpei Time"               , "Samoa Standard Time",
+            "Singapore Time"           , "Solomon Is. Time"           , "South Korea Time",
+            "Syria Time(DST)"          , "Tahiti Time"                , "Tajikistan Time",
+            "Timor-Leste Time"         , "Tonga Time"                 , "Turkey Time",
+            "Turkmenistan Time"        , "Tuvalu Time"                , "UK Time",
+            "Ulaanbaatar Time"         , "Uzbekistan Time"            , "Vanuatu Time",
+            "Vladivostok Standard Time", "West Africa Time"           , "West African Time(DST)",
+            "West Greenland Time"      , "West Indonesia Time"        , "West Samoa Time",
+            "Western Europe Time"      , "Western Standard Time(Aus)" , "Yakutsk Time",
+            "Yap Time"                 , "Yekaterinburg Time"
+        };
 
-        for( String s : tz ) {
-            System.out.println(s);
+        String[] timezonesAsIdsArray = new String[]
+        {
+            "Asia/Kabul"            , "AST"                 , "Brazil/Acre",
+            "Asia/Aqtobe"           , "Asia/Qatar"          , "AGT",
+            "NET"                   , "PRT"                 , "Canada/Atlantic",
+            "Asia/Baku"             , "Asia/Dacca"          , "Europe/Minsk",
+            "Asia/Thimbu"           , "Brazil/East"         , "Asia/Brunei",
+            "Atlantic/Cape_Verde"   , "Africa/Blantyre"     , "CET",
+            "Asia/Makassar"         , "ACT"                 , "Australia/Darwin",
+            "Australia/South"       , "Canada/Central"      , "Mexico/General",
+            "Pacific/Guam"          , "America/Santiago"    , "CTT",
+            "Asia/Choibalsan"       , "Pacific/Chuuk"       , "America/Bogota",
+            "Pacific/Rarotonga"     , "Etc/UTC"             , "EAT",
+            "America/Scoresbysund"  , "Asia/Jayapura"       , "Chile/EasterIsland",
+            "EET"                   , "EST"                 , "Australia/Queensland",
+            "Australia/Sydney"      , "Canada/Eastern"      , "Egypt",
+            "Brazil/DeNoronha"      , "Pacific/Fiji"        , "Europe/Kaliningrad",
+            "Asia/Tbilisi"          , "Pacific/Tarawa"      , "GMT",
+            "Asia/Dubai"            , "HST"                 , "US/Aleutian",
+            "Asia/Hovd"             , "IST"                 , "VST",
+            "Iran"                  , "Eire"                , "Asia/Irkutsk",
+            "Asia/Tel_Aviv"         , "Japan"               , "Asia/Amman",
+            "Asia/Bishkek"          , "Pacific/Kosrae"      , "Asia/Krasnoyarsk",
+            "Libya"                 , "Pacific/Kiritimati"  , "Asia/Magadan",
+            "Asia/Kuala_Lumpur"     , "Indian/Maldives"     , "Kwajalein",
+            "Africa/Casablanca"     , "Europe/Moscow"       , "MST",
+            "Canada/Mountain"       , "Mexico/BajaSur"      , "Asia/Rangoon",
+            "Pacific/Nauru"         , "Asia/Kathmandu"      , "Pacific/Noumea",
+            "NST"                   , "Canada/Newfoundland" , "Pacific/Niue",
+            "Asia/Pyongyang"        , "Asia/Omsk"           , "Canada/Pacific",
+            "Mexico/BajaNorte"      , "Asia/Karachi"        , "Pacific/Palau",
+            "Pacific/Port_Moresby"  , "Asia/Manila"         , "Pacific/Enderbury",
+            "Pacific/Pitcairn"      , "Pacific/Pohnpei"     , "US/Samoa",
+            "Singapore"             , "Pacific/Guadalcanal" , "Asia/Seoul",
+            "Asia/Damascus"         , "Pacific/Tahiti"      , "Asia/Dushanbe",
+            "Asia/Dili"             , "Pacific/Tongatapu"   , "Turkey",
+            "Asia/Ashgabat"         , "Pacific/Funafuti"    , "GB",
+            "Asia/Ulaanbaatar"      , "Asia/Samarkand"      , "Pacific/Efate",
+            "Asia/Vladivostok"      , "Africa/Bangui"       , "Africa/Windhoek",
+            "America/Godthab"       , "Asia/Pontianak"      , "MIT",
+            "WET"                   , "Australia/West"      , "Asia/Khandyga",
+            "Pacific/Yap"           , "Asia/Yekaterinburg"
+        };
+
+        //Place the single timezone countries into the map
+        String[] timezoneArrayContainer = new String[1];
+        for(int i=0; i<timezonesAsReadableArray.length; i++) {
+            timezoneArrayContainer[0] = timezonesAsIdsArray[i];
+            timezoneMap.put(timezonesAsReadableArray[i], timezoneArrayContainer);
         }
-
-        System.out.println(t.inDaylightTime(new java.util.Date()));
-
-        System.out.println(t.inDaylightTime(new java.util.Date(2014, 10, 10)));
     }
-    */
 }
