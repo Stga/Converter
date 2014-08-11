@@ -2,9 +2,9 @@ package com.allizgwats.converter;
 
 import java.util.HashMap;
 
-public class TimezoneMapManager {
+class TimezoneMapManager {
 
-    private HashMap<String, String[]> timezoneMap = new HashMap<String, String[]>();
+    private final HashMap<String, String[]> timezoneMap = new HashMap<String, String[]>();
 
     public TimezoneMapManager() {
 
@@ -437,7 +437,7 @@ public class TimezoneMapManager {
         });
     }
 
-    public void setTimezoneReadableAndIdsInMap() {
+    private void setTimezoneReadableAndIdsInMap() {
         String[] timezonesAsReadableArray = new String[]
         {
             "Afghanistan Time"         , "Alaskan Time(DST)"          , "Amazon Time",
