@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.Time;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +20,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.TimeZone;
 
 /**
  * Fragment for converting 24 hour time input from one timezone to another.
@@ -37,20 +40,34 @@ public class TimeConverterFragment extends Fragment {
     /**
      * The gui elements to be shown to the user
      */
-    private EditText hoursFrom;        private EditText minutesFrom;
-    private TextView convertedTime;    private TextView currentlySelectedTimezoneIdentifier;
-    private Button   timezonesFrom;    private Button   timezonesTo;
+    private EditText hoursFrom;         private EditText minutesFrom;
+    private TextView convertedTime;     private TextView currentlySelectedTimezoneIdentifier;
+    private Button   timezonesFrom;     private Button   timezonesTo;
     private ListView timezonesListView; private ArrayAdapter<String> timezonesListViewAdapter;
-    private Button   convertTimeButton;
+    private Button   convertTimeButton; private TextView originalTimezoneIdentifierText;
+    private TextView convertedTimezoneIdentifierText;
 
     //Used to hold string array resources for updating timezone ListView. Holds original timezone list
     private String[] timezoneArrayA;
     //Used to hold string array resources for updating timezone ListView. Holds converted timezone list
     private String[] timezoneArrayB;
 
-    //Simple counter for identifying what level of list is shown
+    //Counters for identifying how deep a user has progressed through the timezoneSelector ListView
     private int timezoneASelectorDepth=0;
     private int timezoneBSelectorDepth=0;
+
+    //Used for highlighting users choices when returning to a timezone list where a choice has
+    //already been made and to identify when a user is selecting a timezone to be used or is still
+    //navigating through the ListView hierarchy
+    private final int finalSelectorDepth = 2;
+
+    //Identifier strings used to allow a user to progress backwards after making a selection
+    //These will be placed at the top of the timezoneSelector ListView
+    private String userSelectedRegionA;
+    private String userSelectedRegionB;
+
+    //Identifer for setting which timezone is being selected for (A or B)
+    private boolean timezoneAIsSelected;
 
     //Marker to allow for scrolling and highlighting of a previous user selection after switching
     //to a timezone which has already been set. (e.g. timezoneA is set, user switches to B then A,
@@ -58,14 +75,20 @@ public class TimeConverterFragment extends Fragment {
     private int timezoneASelectedPosition = 0;
     private int timezoneBSelectedPosition = 0;
 
-    //Identifer for setting which timezone is being selected
-    private boolean timezoneAIsSelected;
+    //The timezone objects to be assigned to when the user selects a timezone to use in the
+    //timezoneSelector ListView
+    private String timezoneA;
+    private String timezoneB;
 
     /**
      * Listeners for the edit texts. These are implemented in a private inner class
      */
     private CustomTextWatcher hoursTextWatcher;
     private CustomTextWatcher minutesTextWatcher;
+
+    //Set up HashMap to be used for getting timezoneSelector ListViews
+    private TimezoneMapManager timezoneMapManager;
+    private HashMap<String, String[]> timezoneMap;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -90,7 +113,11 @@ public class TimeConverterFragment extends Fragment {
         //Attach listeners to relevant views inside inflated fragment "time_converter_fragment.
         attachListeners(rootView);
 
+        //Set the default timezoneLists that will be displayed in the timezoneSelector ListViews
         setLevelZeroTimezoneSelectorItems();
+
+        timezoneMapManager = new TimezoneMapManager();
+        timezoneMap = timezoneMapManager.getTimezoneMap();
 
         return rootView;
     }
@@ -131,27 +158,19 @@ public class TimeConverterFragment extends Fragment {
         //Instantiate the converted time textview so it can be updated when needed
         convertedTime = (TextView) rootView.findViewById(R.id.timeConverter_convertedTime);
 
+        originalTimezoneIdentifierText = (TextView) rootView
+                .findViewById(R.id.timeConverter_originalTimeIdentifierText);
+
+        convertedTimezoneIdentifierText = (TextView) rootView
+                .findViewById(R.id.timeConverter_convertedTimeIdentifierText);
+
         //Button the user presses to convert entered time from timezone A to timezone B
         convertTimeButton = (Button) rootView.findViewById(R.id.timeConverter_convertInputButton);
         convertTimeButton.setOnClickListener(convertTimeButtonListener);
 
         timezonesListView = (ListView) rootView.findViewById
                 (R.id.timeConverter_timezoneSelectorListView);
-
-        timezonesListView.setOnItemClickListener(timezoneSelectorListener);
-    }
-
-
-    /**
-     * TODO Calculate the differences between selected timezones using users inserted hours/minutes
-     */
-    private void calculateTimezoneDifferences() {
-        Calendar cal = new GregorianCalendar(Time.YEAR, Time.MONTH, Time.MONTH_DAY);
-
-        Toast.makeText(getActivity(),
-                "Calculating timezone differences",
-                Toast.LENGTH_SHORT)
-                .show();
+        timezonesListView.setOnItemClickListener(timezoneListViewListener);
     }
 
     /**
@@ -159,47 +178,131 @@ public class TimeConverterFragment extends Fragment {
      * first selects either the timezoneAButton or timezoneBButton
      */
     private void setLevelZeroTimezoneSelectorItems() {
-        timezoneArrayA = getResources()
-                .getStringArray(R.array.timeConverter_timezoneListDefaultLevel);
-
-        timezoneArrayB = getResources()
-                .getStringArray(R.array.timeConverter_timezoneListDefaultLevel);
+        TimezoneMapManager timezoneMapManager = new TimezoneMapManager();
+        HashMap<String, String[]> timezoneMap = timezoneMapManager.getTimezoneMap();
+        timezoneArrayA = timezoneMap.get("Regions");
+        timezoneArrayB = timezoneMap.get("Regions");
     }
 
     /**
-     * Update arrays that are used by ListView adapter to show new items in the timezone ListView
-     * @param stringArrayResource items that will be placed into timezone string arrays for updating
+     * Calculate the difference between a users selected time and two user selected timezones
+     * (hoursFrom/minutesFrom, timezoneA/timezoneB).
+     * @return String representation of the users input time after conversion from timezoneA
+     *         to timezoneB
      */
-    //TODO - update the timezone arrays when an item is selected from the ListView
-    private void updateTimezoneArray(String[] stringArrayResource) {
-        //Show the default list of timezones in the timezone selector ListView
-        //timezoneList = getResources()
-        //        .getStringArray(R.array.timeConverter_timezoneListDefaultLevel);
+    private String calculateTimezoneDifferences() {
+        String[] timezoneAArray = timezoneMap.get(timezoneA);
 
-        //For allowing user to return to a higher level on the ListView
-        if(timezoneASelectorDepth > 0) {
-            timezonesListViewAdapter.add("-- Back --");
+        //Create a new calendar instance using the user selected timezoneA.
+        //Set the time of day using the user input times from EditTexts.
+        GregorianCalendar fromCal = new GregorianCalendar(TimeZone.getTimeZone(timezoneAArray[0]));
+        fromCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hoursFrom.getText().toString()));
+        fromCal.set(Calendar.MINUTE, Integer.parseInt(minutesFrom.getText().toString()));
+
+        //Get the user selected timezoneB and create a new calendar of this timezone.
+        //Using the previous calendars current time in milliseconds an easy conversion can be
+        //made to the new timezone by simply setting them to the "same" time.
+        String[] timezoneBArray = timezoneMap.get(timezoneB);
+        GregorianCalendar toCal = new GregorianCalendar(TimeZone.getTimeZone(timezoneBArray[0]));
+        toCal.setTimeInMillis(fromCal.getTimeInMillis());
+
+        //Get String representations of the converted time from the relevant calendar.
+        //These will be concatenated into a single String to be returned and placed into the
+        //converted time TextView shown to the user.
+        final String convertedHours = String.valueOf(toCal.get(Calendar.HOUR_OF_DAY));
+        final String convertedMinutes = String.valueOf(toCal.get(Calendar.MINUTE));
+        String convertedTime;
+
+        //Concatenate time and add leading zeroes to any single digit number to keep the displayed
+        //times consistent across all timezone conversions.
+        convertedTime = toCal.get(Calendar.HOUR_OF_DAY)<10 ? "0"+convertedHours : convertedHours;
+        convertedTime += ":";
+        convertedTime += toCal.get(Calendar.MINUTE)<10 ? "0"+convertedMinutes : convertedMinutes;
+
+        return convertedTime;
+    }
+
+    /**
+     * Change the items in the timezonesSelector ListView with new items
+     * This assumes that the timezoneArrays and the timezoneAIsSelected boolean
+     * have already been updated and uses conditionals to decide what layout and array to use
+     * for the ListView adapter
+     */
+    private void replaceItemsInTimezoneSelectorListView() {
+        //Set the timezone adapter resource based on which timezone the user is setting
+        //currently. This is used to change the selection color of the ListView items i.e.
+        //having blue text for the timezoneA's selected item and red for timezoneB's selected item
+        if(timezoneAIsSelected) {
+            timezonesListViewAdapter = new ArrayAdapter<String>(getActivity(),
+                    R.layout.time_converter_listview_item_timezone_a);
+        } else {
+            timezonesListViewAdapter = new ArrayAdapter<String>(getActivity(),
+                    R.layout.time_converter_listview_item_timezone_b);
         }
+
+        //Reattach adapter after it has been assigned to based on which button the user selected
+        //If this is not done, the items will not appear in the ListView
+        timezonesListView.setAdapter(timezonesListViewAdapter);
+
+        //Remove all elements currently in the timezoneSelector ListView
+        timezonesListViewAdapter.clear();
+
+        //Add items to the timezoneSelector ListView based on what timezoneButton is used
+        if(timezoneAIsSelected) {
+            for(String timezoneArrayItem : timezoneArrayA) {
+                timezonesListViewAdapter.add(timezoneArrayItem);
+            }
+        }
+        else {
+            for(String timezoneArrayItem : timezoneArrayB) {
+                timezonesListViewAdapter.add(timezoneArrayItem);
+            }
+        }
+
+        //ListView Adapters data may have been changed redraw the timezoneSelector
+        //ListView with the new data
+        timezonesListViewAdapter.notifyDataSetChanged();
+        timezonesListView.setVisibility(View.VISIBLE);
     }
 
     /**
-     * Updates the TextView used for showing the user which timezone they are currently selecting
-     * for by means of a small message in a TextView
+     * Updates the TextView used for showing the user which timezone type they are currently using
+     * (i.e. Timezone A or Timezone B)
      */
-     void updateCurrentSelectorMessage() {
+     private void updateTimezoneSelectorIdentifierMessage() {
         currentlySelectedTimezoneIdentifier =
-                (TextView) getView().findViewById(R.id.timeConverter_timezoneSelectorTextView);
+            (TextView) getView().findViewById(R.id.timeConverter_timezoneSelectorTextView);
+
+        //Colors to be used when setting the text color of the TextView
+        final int aIsSelectedColor = getResources().getColor(R.color.timezoneAColor);
+        final int bIsSelectedColor = getResources().getColor(R.color.timezoneBColor);
+
+        //Set the colour of the text based on what timezone the user is selecting
+        currentlySelectedTimezoneIdentifier.setTextColor(
+            timezoneAIsSelected ? aIsSelectedColor : bIsSelectedColor
+        );
+
         final String selectedTimezoneIdentifierString =
-                timezoneAIsSelected ? "First" : "Second";
+        timezoneAIsSelected ? "From" : "To";
+
         currentlySelectedTimezoneIdentifier.setText
-                ("|-Select " + selectedTimezoneIdentifierString + " Timezone-|");
+        ("|-Select " + selectedTimezoneIdentifierString + " Timezone-|");
+    }
+
+    private void setConvertedTime(String timeToSetInConvertedTimeTextView) {
+        //Ensure entered String matches HH:mm format before entering it
+        String matchPattern = "\\d\\d\\:\\d\\d";
+
+        if(timeToSetInConvertedTimeTextView.matches(matchPattern)){
+            convertedTime.setText(timeToSetInConvertedTimeTextView);
+        }
     }
 
 
     /**     *******************************************************************
      *      ***LISTENERS BEYOND THIS POINT - BEWARE ALL YE WHO VENTURE FORTH***
      *      *******************************************************************
-     */
+     *
     /**
      * Listener for the button the user presses to convert input time from timezone A to timezone B.
      * This should simply redirect to another method that will handle the parse from strings to
@@ -208,7 +311,21 @@ public class TimeConverterFragment extends Fragment {
     private OnClickListener convertTimeButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            calculateTimezoneDifferences();
+
+            //If both Timezones are set, do the time conversion. Otherwise inform the user which
+            //timezone they are missing.
+            if(timezoneA!=null && timezoneB != null) {
+                setConvertedTime(calculateTimezoneDifferences());
+            }
+            else if(timezoneA==null) {
+
+                Toast.makeText(getActivity(), "Please select a \'From\' Timezone",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getActivity(), "Please select a \'To\' Timezone",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
@@ -220,49 +337,149 @@ public class TimeConverterFragment extends Fragment {
      * after leaving it.
      */
     //TODO - write going through the regions when clicking the ListView
-    private OnItemClickListener timezoneSelectorListener = new OnItemClickListener() {
+    private OnItemClickListener timezoneListViewListener = new OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            //This is used to get around the NullPointer Exception that can occur when trying to
+            //TextView is used to get around the NullPointer Exception that can occur when trying to
             //access ListView items using the onItemClicks view(args #2). The ListViews view
             //recycling mechanism will cause highlighting of more than one item when using that.
-            TextView selectedTextInsideListView;
-            int finalDepth = 4;
+            final TextView selectedItemInListView = (TextView) view;
 
             //An item in timezoneA list has been selected
             if(timezoneAIsSelected) {
-                if(timezoneASelectorDepth == finalDepth) {
-                    //User has selected an actual timezone, store this selection in order to be able to
-                    //return to it later.
-                    timezoneASelectedPosition = i; //used in timezoneA button OnClick
-                    selectedTextInsideListView = (TextView) view;
-                    selectedTextInsideListView.setSelected(true); //causes color change in text
-                } else {
-                    //User is navigating through the region selection. React based on what region
-                    //they have selected
-                    TextView test = (TextView) view;
-                    Toast.makeText(getActivity(), test.getText(), Toast.LENGTH_SHORT).show();
+                if(timezoneASelectorDepth>0 && i==0) {
+                    //Use the text within the ListView row as Key to get new data from HashMap
+                    String[] mapArray = timezoneMap.get(selectedItemInListView.getText().toString());
+
+                    //ArrayList is used to easily add an item in front of the value(array) that is
+                    //returned from the HashMap
+                    java.util.ArrayList<String> list = new ArrayList<String>();
+
+                    //Add in an item to the list in order to allow the user to navigate
+                    //backwards through the timezoneSelector ListView
+                    if(timezoneASelectorDepth==2){
+                        list.add("Regions");
+                    }
+
+                    //Add the value(String[]) retrieved from the HashMap to the list
+                    Collections.addAll(list, mapArray);
+
+                    //Transform the list and assign it to the array that is used by the
+                    //ListViewAdapter for updating the content of the timezoneSelector ListView
+                    timezoneArrayA = list.toArray(new String[list.size()]);
+
+                    //User is navigating "backwards" through the ListView, update their position
+                    timezoneASelectorDepth--;
+                }
+                else if(timezoneASelectorDepth == finalSelectorDepth && i!=0) {
+                    //Assign the java timezone Id so it can be used later for calculating time
+                    //difference
+                    timezoneA = selectedItemInListView.getText().toString();
+                    originalTimezoneIdentifierText.setText(timezoneA);
+                }
+                else {
+                    //Use the text within the ListView row as Key to get new data from HashMap
+                    String[] mapArray = timezoneMap.get(selectedItemInListView.getText().toString());
+
+                    //ArrayList is used to easily add an item in front of the value(array) that is
+                    //returned from the HashMap
+                    java.util.ArrayList<String> list = new ArrayList<String>();
+
+                    //Add in an item to the list in order to allow the user to navigate
+                    //backwards through the timezoneSelector ListView
+                    if(timezoneASelectorDepth==0){
+                        list.add("Regions");
+                        userSelectedRegionA = selectedItemInListView.getText().toString();
+                    }
+                    else if(timezoneASelectorDepth==1){
+                        list.add(userSelectedRegionA);
+                    }
+
+                    //Add the values(String[]) retrieved from the HashMap to the list
+                    Collections.addAll(list, mapArray);
+
+                    //Transform the list and assign it to the array that is used by the
+                    //ListViewAdapter for updating the content of the timezoneSelector ListView
+                    timezoneArrayA = list.toArray(new String[list.size()]);
+
+                    //User is navigating "forwards" through the ListView, update their position
+                    timezoneASelectorDepth++;
                 }
             }
+
             //An item in timezoneB list has been selected
             else {
-                if(timezoneBSelectorDepth == finalDepth) {
-                    //User has selected an actual timezone, store this selection in order to be able to
-                    //return to it later.
-                    timezoneBSelectedPosition = i; //used in timezoneB button OnClick
-                    selectedTextInsideListView = (TextView) view;
-                    selectedTextInsideListView.setSelected(true); //causes color change in text
-                } else {
-                    //User is navigating through the region selection. React based on what region
-                    //they have selected
+                if(timezoneBSelectorDepth>0 && i==0) {
+                    //Use the text within the ListView row as Key to get new data from HashMap
+                    String[] mapArray = timezoneMap.get(selectedItemInListView.getText().toString());
 
+                    //ArrayList is used to easily add an item in front of the value(array) that is
+                    //returned from the HashMap
+                    java.util.ArrayList<String> list = new ArrayList<String>();
+
+                    //Add in an item to the list in order to allow the user to navigate
+                    //backwards through the timezoneSelector ListView
+                    if(timezoneBSelectorDepth==2){
+                        list.add("Regions");
+                    }
+
+                    //Add the value(String[]) retrieved from the HashMap to the list
+                    Collections.addAll(list, mapArray);
+
+                    //Transform the list and assign it to the array that is used by the
+                    //ListViewAdapter for updating the content of the timezoneSelector ListView
+                    timezoneArrayB = list.toArray(new String[list.size()]);
+
+                    //User is navigating "backwards" through the ListView, update their position
+                    timezoneBSelectorDepth--;
+                }
+                else if(timezoneBSelectorDepth == finalSelectorDepth && i!=0) {
+                    //Assign the java timezone Id so it can be used later for calculating time
+                    //difference
+                    timezoneB = selectedItemInListView.getText().toString();
+                    convertedTimezoneIdentifierText.setText(timezoneB);
+                }
+                else {
+                    //Use the text within the ListView row as Key to get new data from HashMap
+                    String[] mapArray = timezoneMap.get(selectedItemInListView.getText().toString());
+
+                    //ArrayList is used to easily add an item in front of the value(array) that is
+                    //returned from the HashMap
+                    java.util.ArrayList<String> list = new ArrayList<String>();
+
+                    //Add in an item to the list in order to allow the user to navigate
+                    //backwards through the timezoneSelector ListView
+                    if(timezoneBSelectorDepth==0){
+                        list.add("Regions");
+                        userSelectedRegionB = selectedItemInListView.getText().toString();
+                    }
+                    else if(timezoneBSelectorDepth==1){
+                        list.add(userSelectedRegionB);
+                    }
+
+                    //Add the values(String[]) retrieved from the HashMap to the list
+                    Collections.addAll(list, mapArray);
+
+                    //Transform the list and assign it to the array that is used by the
+                    //ListViewAdapter for updating the content of the timezoneSelector ListView
+                    timezoneArrayB = list.toArray(new String[list.size()]);
+
+                    //User is navigating "forwards" through the ListView, update their position
+                    timezoneBSelectorDepth++;
                 }
             }
+
+            //Redraw the timezoneSelector ListView using the updated data if the user is navigating
+            //(redrawing should not occur when the user is selecting a timezone to use)
+            //-1 is subtracted as the selectorDepths are updated before redrawing the the ListView
+            //items, this causes the if to think that it is on the last level when it is stuck on
+            //the previous
+            replaceItemsInTimezoneSelectorListView();
         }
     };
 
-     /**
+    /**
      * OnEditorActionListener for the time input EditText's. Used for adding leading zeros to
      * single-digit inputs after the user has selected done on the keyboard.
      */
@@ -293,53 +510,18 @@ public class TimeConverterFragment extends Fragment {
     OnClickListener showTimezonesButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
+            //Determine if the user clicked the timezoneFromButton, if this answer is not the same
+            //as the currently selected timezones being displayed update the timezoneSelector
+            //ListView and identifier text to match the users choice. Otherwise ignore as the the
+            //user has pressed the button that corresponds to the currently displayed data.
+            final boolean timezoneButtonAWasPressed= view.getId()==R.id.timeConverter_timezoneFrom;
+
             //Find which timezone button the user has pressed in order to call OnClickListener
-            timezoneAIsSelected = view.getId() == R.id.timeConverter_timezoneFrom;
+            timezoneAIsSelected = timezoneButtonAWasPressed;
 
-            updateCurrentSelectorMessage();
+            updateTimezoneSelectorIdentifierMessage();
 
-            //Set the timezone adapter resource based on which timezone the user is setting
-            //currently. This is used to change the selection color of the ListView items i.e.
-            //having blue text for the timezoneA's selected item and red for timezoneB's selected item
-            if(timezoneAIsSelected) {
-                timezonesListViewAdapter = new ArrayAdapter<String>(getActivity(),
-                        R.layout.time_converter_listview_item_timezone_a);
-            } else {
-                timezonesListViewAdapter = new ArrayAdapter<String>(getActivity(),
-                        R.layout.time_converter_listview_item_timezone_b);
-            }
-
-            timezonesListView.setAdapter(timezonesListViewAdapter);
-
-            timezonesListViewAdapter.clear();
-
-            if(timezoneAIsSelected) {
-                for(String timezoneArrayItem : timezoneArrayA) {
-                    timezonesListViewAdapter.add(timezoneArrayItem);
-                }
-            }
-            else {
-                for(String timezoneArrayItem : timezoneArrayB) {
-                    timezonesListViewAdapter.add(timezoneArrayItem);
-                }
-            }
-
-            timezonesListViewAdapter.notifyDataSetChanged();
-            timezonesListView.setVisibility(View.VISIBLE);
-
-            if(timezoneAIsSelected && timezoneASelectedPosition > -1) {
-                //Force the ListView to select the last selected A point. This changes the text
-                //color and brings focus to this view i.e. shows it to the user
-                timezonesListView.requestFocusFromTouch();
-                timezonesListView.setSelection(timezoneASelectedPosition);
-            }
-            else if(!timezoneAIsSelected && timezoneBSelectedPosition > -1) {
-                //Force the ListView to select the last selected A point. This changes the text
-                //color and brings focus to this view i.e. shows it to the user
-                timezonesListView.requestFocusFromTouch();
-                timezonesListView.setSelection(timezoneBSelectedPosition);
-            }
-
+            replaceItemsInTimezoneSelectorListView();
         }
     };
 

@@ -32,7 +32,7 @@ class TimezoneMapManager {
      */
     private void setRegionsInMap() {
         //Default level
-        timezoneMap.put("default", new String[]{
+        timezoneMap.put("Regions", new String[]{
             "Africa", "Americas", "Asia", "Australia/Oceania", "Europe"
         });
     }
@@ -87,7 +87,7 @@ class TimezoneMapManager {
         timezoneMap.put("Asia", new String[]{
             "Afghanistan"              , "Armenia"      , "Azerbaijan",
             "Bahrain"                  , "Bangladesh"   , "Bhutan",
-            "Brunei Darussalam"        , "Cambodia"     , "China",
+            "Brunei"                   , "Cambodia"     , "China",
             "Cyprus"                   , "Georgia"      , "India",
             "Indonesia"                , "Iran"         , "Iraq",
             "Israel"                   , "Japan"        , "Jordan",
@@ -146,7 +146,6 @@ class TimezoneMapManager {
      * Set the timezones for each country in the African region
      */
     private void setAfricanTimezonesInMap() {
-
         String[] africanCountriesWithOneTimezone = new String[]
         {
             "Algeria"           , "Angola"          , "Benin",
@@ -189,8 +188,12 @@ class TimezoneMapManager {
         "East Africa Time"           , "Central Africa Time"        , "Central Africa Time"
         };
 
-        String[] timezoneArrayContainer = new String[1];
+        //Place the single timezone countries into the map
+        //TimezoneArrayContainer is delcared inside the loop as declaring outside and reassigning
+        //each time causes all Keys to return the final Value of the value set. May have to do with
+        //difference in heap/stack references when using HashMap.put()
         for(int i=0; i<africanCountriesWithOneTimezone.length; i++) {
+            String[] timezoneArrayContainer = new String[1];
             timezoneArrayContainer[0] = timezonesForAfricanCountriesWithOneTimezone[i];
             timezoneMap.put(africanCountriesWithOneTimezone[i], timezoneArrayContainer);
         }
@@ -221,8 +224,11 @@ class TimezoneMapManager {
         };
 
         //Place the single timezone countries into the map
-        String[] timezoneArrayContainer = new String[1];
+        //TimezoneArrayContainer is delcared inside the loop as declaring outside and reassigning
+        //each time causes all Keys to return the final Value of the value set. May have to do with
+        //difference in heap/stack references when using HashMap.put()
         for(int i=0; i<americasCountriesWithOneTimezone.length; i++) {
+            String[] timezoneArrayContainer = new String[1];
             timezoneArrayContainer[0] = timezonesForAmericasCountriesWithOneTimezone[i];
             timezoneMap.put(americasCountriesWithOneTimezone[i], timezoneArrayContainer);
         }
@@ -300,9 +306,12 @@ class TimezoneMapManager {
             "Arabia Standard Time"
         };
 
-        //Place the single timezone countries into the map
-        String[] timezoneArrayContainer = new String[1];
+        //Place the single timezone countries into the map.
+        //TimezoneArrayContainer is delcared inside the loop as declaring outside and reassigning
+        //each time causes all Keys to return the final Value of the value set. May have to do with
+        //difference in heap/stack references when using HashMap.put().
         for(int i=0; i<asianCountriesWithOneTimezone.length; i++) {
+            String[] timezoneArrayContainer = new String[1];
             timezoneArrayContainer[0] = timezonesForAsianCountriesWithOneTimezone[i];
             timezoneMap.put(asianCountriesWithOneTimezone[i], timezoneArrayContainer);
         }
@@ -351,8 +360,11 @@ class TimezoneMapManager {
         };
 
         //Place the single timezone countries into the map
-        String[] timezoneArrayContainer = new String[1];
+        //TimezoneArrayContainer is delcared inside the loop as declaring outside and reassigning
+        //each time causes all Keys to return the final Value of the value set. May have to do with
+        //difference in heap/stack references when using HashMap.put()
         for(int i=0; i<australianOceaniaCountriesWithOneTimezone.length; i++) {
+            String[] timezoneArrayContainer = new String[1];
             timezoneArrayContainer[0] = timezonesForAustralianOceaniaCountriesWithOneTimezone[i];
             timezoneMap.put(australianOceaniaCountriesWithOneTimezone[i], timezoneArrayContainer);
         }
@@ -418,8 +430,11 @@ class TimezoneMapManager {
         };
 
         //Place the single timezone countries into the map
-        String[] timezoneArrayContainer = new String[1];
+        //TimezoneArrayContainer is delcared inside the loop as declaring outside and reassigning
+        //each time causes all Keys to return the final Value of the value set. May have to do with
+        //difference in heap/stack references when using HashMap.put()
         for(int i=0; i<europeanCountriesWithOneTimezone.length; i++) {
+            String[] timezoneArrayContainer = new String[1];
             timezoneArrayContainer[0] = timezonesForEuropeanCountriesWithOneTimezone[i];
             timezoneMap.put(europeanCountriesWithOneTimezone[i], timezoneArrayContainer);
         }
@@ -527,8 +542,11 @@ class TimezoneMapManager {
         };
 
         //Place the single timezone countries into the map
-        String[] timezoneArrayContainer = new String[1];
+        //TimezoneArrayContainer is delcared inside the loop as declaring outside and reassigning
+        //each time causes all Keys to return the final Value of the value set. May have to do with
+        //difference in heap/stack references when using HashMap.put()
         for(int i=0; i<timezonesAsReadableArray.length; i++) {
+            String[] timezoneArrayContainer = new String[1];
             timezoneArrayContainer[0] = timezonesAsIdsArray[i];
             timezoneMap.put(timezonesAsReadableArray[i], timezoneArrayContainer);
         }
