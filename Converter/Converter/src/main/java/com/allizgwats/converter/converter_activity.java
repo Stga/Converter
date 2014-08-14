@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class converter_activity extends ActionBarActivity
@@ -17,31 +16,31 @@ public class converter_activity extends ActionBarActivity
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NavigationDrawerFragment sideDrawer;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
-    private CharSequence mTitle;
+    private CharSequence fragmentTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.converter_layout);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
+        sideDrawer = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        fragmentTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
+        sideDrawer.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments based on selected drawer item
+        //Update the main content by replacing fragments based on selected drawer item
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment newUserSelectedFragment;
 
@@ -50,28 +49,25 @@ public class converter_activity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, newUserSelectedFragment)
                     .commit();
-            Toast.makeText(this, "Time", Toast.LENGTH_SHORT).show();
         }
         else if(position==NavigationDrawerFragment.DrawerItemPositions.WEIGHTCONVERTER.ordinal()) {
             //TODO attach weight converter fragment if user selects weight converter from drawer
-            Toast.makeText(this, "Weight", Toast.LENGTH_SHORT).show();
         }
         else if(position==NavigationDrawerFragment.DrawerItemPositions.DISTANCECONVERTER.ordinal()){
             //TODO attach distance converter fragment if user selects distance converter from drawer
-            Toast.makeText(this, "Distance", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.drawer_item_Time);
+                fragmentTitle = getString(R.string.drawer_item_Time);
                 break;
             case 2:
-                mTitle = getString(R.string.drawer_item_Weight);
+                fragmentTitle = getString(R.string.drawer_item_Weight);
                 break;
             case 3:
-                mTitle = getString(R.string.drawer_item_Distance);
+                fragmentTitle = getString(R.string.drawer_item_Distance);
                 break;
         }
     }
@@ -80,13 +76,13 @@ public class converter_activity extends ActionBarActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        actionBar.setTitle(fragmentTitle);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+        if (!sideDrawer.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.

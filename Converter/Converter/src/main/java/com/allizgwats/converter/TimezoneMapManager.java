@@ -157,34 +157,34 @@ class TimezoneMapManager {
             "Gabon"             , "Gambia"          , "Ghana",
             "Guinea"            , "Guinea-Bissau"   , "Kenya",
             "Lesotho"           , "Liberia"         , "Libya",
-            "Madagascar"        , "Malawi"          ,"Mali",
+            "Madagascar"        , "Malawi"          , "Mali",
             "Mauritania"        , "Mauritius"       , "Morocco",
             "Mozambique"        , "Namibia"         , "Niger",
             "Nigeria"           , "Rwanda"          , "Senegal",
             "Sierra Leone"      , "Somalia"         , "South Africa",
             "South Sudan"       , "Sudan"           , "Swaziland",
-            "Tanzania"          , "Togo"            ,  "Tunisia",
+            "Tanzania"          , "Togo"            , "Tunisia",
             "Uganda"            , "Zambia"          , "Zimbabwe"
         };
 
         String[] timezonesForAfricanCountriesWithOneTimezone = new String[]
         {
         "West Africa Time"           , "West Africa Time"           , "West Africa Time",
-        "Central Africa Time"        , "Coordinated Universal Time" , "Central Africa Time",
+        "Central Africa Time"        , "Coordinated Uni Time"       , "Central Africa Time",
         "West Africa Time"           , "Cape Verde Time"            , "West Africa Time",
         "West Africa Time"           , "East Africa Time"           , "West Africa Time",
-        "Coordinated Universal Time" , "East Africa Time"           , "Egyptian Time(DST)",
+        "Coordinated Uni Time"       , "East Africa Time"           , "Egyptian Time(DST)",
         "West Africa Time"           , "East Africa Time"           , "East Africa Time",
-        "West Africa Time"           , "Coordinated Universal Time" , "Coordinated Universal Time",
-        "Coordinated Universal Time" , "Coordinated Universal Time" , "East Africa Time",
-        "Central Africa Time"        , "Coordinated Universal Time" , "Libyan Time(DST)",
-        "East Africa Time"           , "Central Africa Time"        , "Coordinated Universal Time",
-        "Coordinated Universal Time" , "Mauritius Time"             , "Moroccan Time(DST)",
+        "West Africa Time"           , "Coordinated Uni Time"       , "Coordinated Uni Time",
+        "Coordinated Uni Time"       , "Coordinated Uni Time"       , "East Africa Time",
+        "Central Africa Time"        , "Coordinated Uni Time"       , "Libyan Time(DST)",
+        "East Africa Time"           , "Central Africa Time"        , "Coordinated Uni Time",
+        "Coordinated Uni Time"       , "Mauritius Time"             , "Moroccan Time(DST)",
         "Central Africa Time"        , "West Africa Time(DST)"      , "West Africa Time",
-        "West Africa Time"           , "Central Africa Time"        , "Coordinated Universal Time",
-        "Coordinated Universal Time" , "East Africa Time"           , "Central Africa Time",
+        "West Africa Time"           , "Central Africa Time"        , "Coordinated Uni Time",
+        "Coordinated Uni Time"       , "East Africa Time"           , "Central Africa Time",
         "East Africa Time"           , "East Africa Time"           , "Central Africa Time",
-        "East Africa Time"           , "Coordinated Universal Time" , "West Africa Time",
+        "East Africa Time"           , "Coordinated Uni Time"       , "West Africa Time",
         "East Africa Time"           , "Central Africa Time"        , "Central Africa Time"
         };
 
@@ -209,10 +209,20 @@ class TimezoneMapManager {
     private void setAmericasTimezonesInMap() {
         String[] americasCountriesWithOneTimezone = new String[]
         {
-            "Anguilla"               , "Antigua And Barbuda" , "Argentina",
-            "Aruba"                  , "Bahamas"             , "Barbados",
-            "Belize"                 , "Bermuda"             , "Bolivia",
-            "British Virgin Islands" , "CaymanIslands"       , "Colombia"
+            "Anguilla"                        , "Antigua and Barbuda"  , "Argentina",
+            "Aruba"                           , "Bahamas"              , "Barbados",
+            "Belize"                          , "Bermuda"              , "Bolivia",
+            "British Virgin Islands"          , "Cayman Islands"       , "Colombia",
+            "Costa Rica"                      , "Cuba"                 , "Dominica",
+            "Dominican Republic"              , "Ecuador"              , "El Salvador",
+            "French Guiana"                   , "Grenada"              , "Guadeloupe",
+            "Guatemala"                       , "Guyana"               , "Haiti",
+            "Honduras"                        , "Jamaica"              , "Martinique",
+            "Montserrat"                      , "Netherlands Antilles" , "Nicaragua",
+            "Panama"                          , "Paraguay"             , "Peru",
+            "Puerto Rico"                     , "Saint Kitts and Nevis", "Saint Lucia",
+            "Saint Vincent and the Grenadines", "Suriname"             , "Trinidad and Tobago",
+            "Uruguay"                         , "US Virgin Islands"    , "Venezuela"
         };
 
         String[] timezonesForAmericasCountriesWithOneTimezone = new String[]
@@ -220,7 +230,17 @@ class TimezoneMapManager {
             "Atlantic Standard Time" , "Atlantic Standard Time" , "Argentine Time",
             "Atlantic Standard Time" , "Eastern Time(DST)"      , "Atlantic Standard Time",
             "Central Standard Time"  , "Atlantic Time(DST)"     , "Atlantic Standard Time",
-            "Atlantic Standard Time" , "Eastern Standard Time"  , "Colombia Time"
+            "Atlantic Standard Time" , "Eastern Standard Time"  , "Colombia Time",
+            "Central Standard Time"  , "Cuba Time"              , "Atlantic Standard Time",
+            "Atlantic Standard Time" , "Ecuador Time"           , "Central Standard Time",
+            "French Guiana Time"     , "Atlantic Standard Time" , "Atlantic Standard Time",
+            "Central Standard Time"  , "Guyana Time"            , "Eastern Time(DST)",
+            "Central Standard Time"  , "Eastern Standard Time"  , "Atlantic Standard Time",
+            "Atlantic Standard Time" , "Atlantic Standard Time" , "Central Standard Time",
+            "Eastern Standard Time"  , "Paraguay Time"          , "Peru Time",
+            "Atlantic Standard Time" , "Atlantic Standard Time" , "Atlantic Standard Time",
+            "Atlantic Standard Time" , "Suriname Time"          , "Atlantic Standard Time",
+            "Uruguay Time"           , "Atlantic Standard Time" , "Venezuela Time"
         };
 
         //Place the single timezone countries into the map
@@ -274,7 +294,7 @@ class TimezoneMapManager {
             "Cyprus"                    , "Georgia"      , "India",
             "Iran"                      , "Iraq"         , "Israel",
             "Japan"                     , "Jordan"       , "Kazakhstan",
-            "Korea(North)"              , "Korea(South)" , "Kuwait",
+            "Korea (North)"             , "Korea (South)", "Kuwait",
             "Kyrgyzstan"                , "Laos"         , "Lebanon",
             "Malaysia"                  , "Maldives"     , "Myanmar",
             "Nepal"                     , "Oman"         , "Pakistan",
@@ -299,7 +319,7 @@ class TimezoneMapManager {
             "Malaysia Time"             , "Maldives Time"        , "Myanmar Time",
             "Nepal Time"                , "Gulf Standard Time"   , "Pakistan Time",
             "Philippines Time"          , "Arabia Standard Time" , "Arabia Standard Time",
-            "Singapore  Time"           , "India Standard Time"  , "Syria Time",
+            "Singapore Time"            , "India Standard Time"  , "Syria Time",
             "China Standard Time"       , "Tajikistan Time"      , "Indochina Time",
             "Timor-Leste Time"          , "Turkey Time"          , "Turkmenistan Time",
             "Gulf Standard Time"        , "Uzbekistan Time"      , "Indochina Time",
@@ -476,7 +496,7 @@ class TimezoneMapManager {
             "Iran Time(DST)"           , "Ireland Time"               , "Irkutsk",
             "Israel Time"              , "Japan Standard Time"        , "Jordan Time",
             "Kirgizstan Time"          , "Kosrae Time"                , "Krasnoyarsk Time",
-            "Libya(DST)"               , "Line Island Time"           , "Magadan Time",
+            "Libyan Time(DST)"         , "Line Island Time"           , "Magadan Time",
             "Malaysia Time"            , "Maldives Time"              , "Marshall Islands Time",
             "Moroccan Time(DST)"       , "Moscow Time"                , "Mountain Standard Time",
             "Mountain Time(DST)"       , "Mountain Time(DST)(m)"      , "Myanmar Time",
@@ -487,14 +507,18 @@ class TimezoneMapManager {
             "Papua New Guinea Time"    , "Philippines Time"           , "Phoenix Island Time",
             "Pitcairn Standard Time"   , "Pohnpei Time"               , "Samoa Standard Time",
             "Singapore Time"           , "Solomon Is. Time"           , "South Korea Time",
-            "Syria Time(DST)"          , "Tahiti Time"                , "Tajikistan Time",
+            "Syria Time"               , "Tahiti Time"                , "Tajikistan Time",
             "Timor-Leste Time"         , "Tonga Time"                 , "Turkey Time",
             "Turkmenistan Time"        , "Tuvalu Time"                , "UK Time",
             "Ulaanbaatar Time"         , "Uzbekistan Time"            , "Vanuatu Time",
             "Vladivostok Standard Time", "West Africa Time"           , "West African Time(DST)",
             "West Greenland Time"      , "West Indonesia Time"        , "West Samoa Time",
             "Western Europe Time"      , "Western Standard Time(Aus)" , "Yakutsk Time",
-            "Yap Time"                 , "Yekaterinburg Time"
+            "Yap Time"                 , "Yekaterinburg Time"         , "Cuba Time",
+            "Ecuador Time"             , "French Guiana Time"         , "Guyana Time",
+            "Paraguay Time"            , "Peru Time"                  , "Suriname Time",
+            "Uruguay Time"             , "Venezuela Time"             , "Mauritius Time",
+            "West Africa Time(DST)"    , "Eastern Europe Time(DST)"
         };
 
         String[] timezonesAsIdsArray = new String[]
@@ -538,7 +562,11 @@ class TimezoneMapManager {
             "Asia/Vladivostok"      , "Africa/Bangui"       , "Africa/Windhoek",
             "America/Godthab"       , "Asia/Pontianak"      , "MIT",
             "WET"                   , "Australia/West"      , "Asia/Khandyga",
-            "Pacific/Yap"           , "Asia/Yekaterinburg"
+            "Pacific/Yap"           , "Asia/Yekaterinburg"  , "America/Havana",
+            "America/Guayaquil"     , "America/Cayenne"     , "America/Guyana",
+            "America/Asuncion"      , "America/Lima"        , "America/Paramaribo",
+            "America/Montevideo"    , "America/Caracas"     , "Indian/Mauritius",
+            "Africa/Windhoek"       , "Asia/Beirut"
         };
 
         //Place the single timezone countries into the map

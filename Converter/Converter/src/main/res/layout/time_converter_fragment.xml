@@ -55,7 +55,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="0.6"
-            android:background="@drawable/time_converter_tz_a_button_style"
+            android:background="@drawable/time_converter_timezone_button_a_style"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             />
@@ -71,7 +71,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="0.6"
-            android:background="@drawable/time_converter_tz_b_button_style"
+            android:background="@drawable/time_converter_listview_row_selector_timezone_b"
             android:layout_marginRight="0dp"
             android:layout_marginLeft="30dp"
             android:layout_gravity="center_vertical"
