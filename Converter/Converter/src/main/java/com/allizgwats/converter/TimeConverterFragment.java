@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.Time;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -133,10 +135,10 @@ public class TimeConverterFragment extends Fragment {
         convertedTimeDisplay = (TextView) rootView.findViewById(R.id.timeConverter_convertedTime);
 
         timezoneAIdentifierText = (TextView) rootView
-                .findViewById(R.id.timeConverter_originalTimeIdentifierText);
+                .findViewById(R.id.timeConverter_timezoneAIdentifierText);
 
         timezoneBIdentifierText = (TextView) rootView
-                .findViewById(R.id.timeConverter_convertedTimeIdentifierText);
+                .findViewById(R.id.timeConverter_timezoneBIdentifierText);
 
         Button convertTimeButton = (Button) rootView.findViewById(R.id.timeConverter_convertInputButton);
         convertTimeButton.setOnClickListener(convertTimeButtonListener);
@@ -155,6 +157,14 @@ public class TimeConverterFragment extends Fragment {
         HashMap<String, String[]> timezoneMap = timezoneMapManager.getTimezoneMap();
         timezoneArrayA = timezoneMap.get("Regions");
         timezoneArrayB = timezoneMap.get("Regions");
+
+        //Set the input time to the current time on the device for ease of use if the user
+        //does not realize they can edit the input EditTexts
+        Time time = new Time();
+        time.setToNow();
+        time.format3339(true);//Set the time object to use 24-hour time format
+        hoursFromEditText.setText(String.valueOf(time.hour));
+        minutesFromEditText.setText(String.valueOf(time.minute));
     }
 
     /**
@@ -313,7 +323,6 @@ public class TimeConverterFragment extends Fragment {
      * highlighting the choices the user makes after selection and when returning to the ListView
      * after leaving it.
      */
-    //TODO - write going through the regions when clicking the ListView
     private OnItemClickListener timezoneListViewListener = new OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -442,7 +451,7 @@ public class TimeConverterFragment extends Fragment {
      * OnEditorActionListener for the time input EditText's. Used for adding leading zeros to
      * single-digit inputs after the user has selected done on the keyboard.
      */
-    private TextView.OnEditorActionListener timeEditedListener = new TextView.OnEditorActionListener() {
+    private OnEditorActionListener timeEditedListener = new OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView textView, int eventId, KeyEvent keyEvent) {
             boolean isDone = eventId==EditorInfo.IME_ACTION_DONE
@@ -466,7 +475,7 @@ public class TimeConverterFragment extends Fragment {
      * Listener for displaying the timezone which corresponds with the button the user has pressed
      * i.e. show the From list if the From button is selected and vice versa.
      */
-    OnClickListener showTimezonesButtonListener = new OnClickListener() {
+    private OnClickListener showTimezonesButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
             //Find which timezone button the user has pressed

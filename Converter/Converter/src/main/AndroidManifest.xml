@@ -2,6 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.allizgwats.converter" >
 
+    <compatible-screens>
+        <!-- small size screens -->
+        <screen android:screenSize="small" android:screenDensity="ldpi" />
+
+        <!-- normal size screens -->
+        <screen android:screenSize="normal" android:screenDensity="mdpi" />
+        <screen android:screenSize="normal" android:screenDensity="hdpi" />
+        <screen android:screenSize="normal" android:screenDensity="xhdpi" />
+        <!-- support for xxhdp normal size screens-->
+        <screen android:screenSize="normal" android:screenDensity="480" />
+
+        <!-- large size screens -->
+        <screen android:screenSize="large" android:screenDensity="mdpi" />
+        <screen android:screenSize="large" android:screenDensity="hdpi" />
+        <screen android:screenSize="large" android:screenDensity="xhdpi" />
+    </compatible-screens>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -10,7 +27,8 @@
         <activity
             android:name=".converter_activity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -18,8 +18,8 @@
     <string name="timeConverter_defaultFromUiTimes">00</string>
     <string name="timeConverter_timesDivider">:</string>
     <string name="timeConverter_defaultToUiTime">00:00</string>
-    <string name="timeConverter_originalTimeIdentifierText">Timezone A</string>
-    <string name="timeConverter_convertedTimeIdentifierText">Timezone B</string>
+    <string name="timeConverter_timezoneAIdentifierText">Timezone A</string>
+    <string name="timeConverter_timezoneBIdentifierText">Timezone B</string>
     <string name="timeConverter_timezoneSelectorIdentifier">Timezone</string>
 
 </resources>
