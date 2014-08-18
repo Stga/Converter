@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class converter_activity extends ActionBarActivity
@@ -45,27 +44,36 @@ public class converter_activity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment newUserSelectedFragment;
 
-        if(position==NavigationDrawerFragment.DrawerItemPositions.TIMECONVERTER.ordinal()) {
-            newUserSelectedFragment = new TimeConverterFragment().newInstance(position + 1);
+        if(position==NavigationDrawerFragment.DrawerItemPositions.TIMECONVERTERA.ordinal()) {
+            newUserSelectedFragment = new TimeConverterFragmentA().newInstance(position);
             fragmentManager.beginTransaction()
                     .replace(R.id.container, newUserSelectedFragment)
                     .commit();
-            Toast.makeText(this, "Time", Toast.LENGTH_SHORT).show();
+        }
+        else if(position==NavigationDrawerFragment.DrawerItemPositions.TIMECONVERTERB.ordinal()) {
+            newUserSelectedFragment = new TimeConverterFragmentB().newInstance(position);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, newUserSelectedFragment)
+                    .commit();
         }
         else if(position==NavigationDrawerFragment.DrawerItemPositions.WEIGHTCONVERTER.ordinal()) {
-            //TODO attach weight converter fragment if user selects weight converter from drawer
-            Toast.makeText(this, "Weight", Toast.LENGTH_SHORT).show();
+            newUserSelectedFragment = new WeightConverter().newInstance(position);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, newUserSelectedFragment)
+                    .commit();
         }
         else if(position==NavigationDrawerFragment.DrawerItemPositions.DISTANCECONVERTER.ordinal()){
             //TODO attach distance converter fragment if user selects distance converter from drawer
-            Toast.makeText(this, "Distance", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
+            case 0:
+                mTitle = getString(R.string.drawer_item_TimeA);
+                break;
             case 1:
-                mTitle = getString(R.string.drawer_item_Time);
+                mTitle = getString(R.string.drawer_item_TimeB);
                 break;
             case 2:
                 mTitle = getString(R.string.drawer_item_Weight);

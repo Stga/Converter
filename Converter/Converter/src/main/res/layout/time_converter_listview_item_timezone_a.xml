@@ -8,5 +8,5 @@
     android:paddingLeft="5dp"
     android:paddingBottom="10dp"
     android:textColor="@drawable/time_converter_listview_row_selector_timezone_a"
-    android:textSize="18sp"
+    android:textSize="16sp"
     android:maxLines="1"/>

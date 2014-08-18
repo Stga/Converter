@@ -31,8 +31,9 @@ import java.util.TimeZone;
 
 /**
  * Fragment for converting 24 hour time input from one timezone to another.
+ * The Timezones are presented by Countries in which they reside and using easily readable names.
  */
-public class TimeConverterFragment extends Fragment {
+public class TimeConverterFragmentA extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -75,15 +76,15 @@ public class TimeConverterFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public TimeConverterFragment newInstance(int sectionNumber) {
-        TimeConverterFragment fragment = new TimeConverterFragment();
+    public TimeConverterFragmentA newInstance(int sectionNumber) {
+        TimeConverterFragmentA fragment = new TimeConverterFragmentA();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public TimeConverterFragment() {
+    public TimeConverterFragmentA() {
     }
 
     @Override
@@ -98,8 +99,8 @@ public class TimeConverterFragment extends Fragment {
         setLevelZeroTimezoneSelectorItems();
 
         //Create the HashMap to be used for all conversion and navigation operations in the fragment
-        TimezoneMapManager timezoneMapManager = new TimezoneMapManager();
-        timezoneMap = timezoneMapManager.getTimezoneMap();
+        TimezoneMapManagerA timezoneMapManagerA = new TimezoneMapManagerA();
+        timezoneMap = timezoneMapManagerA.getTimezoneMap();
 
         return rootView;
     }
@@ -113,7 +114,7 @@ public class TimeConverterFragment extends Fragment {
 
     /**
      * Attach listeners to the fragments gui elements
-     * @param rootView The inflated TimeConverterFragment view that will be displayed to the user.
+     * @param rootView The inflated TimeConverterFragmentA view that will be displayed to the user.
      */
     private void attachListeners(View rootView) {
         hoursFromEditText = (EditText) rootView.findViewById(R.id.timeConverter_hoursFrom);
@@ -153,8 +154,8 @@ public class TimeConverterFragment extends Fragment {
      * first selects either the timezoneAButton or timezoneBButton
      */
     private void setLevelZeroTimezoneSelectorItems() {
-        TimezoneMapManager timezoneMapManager = new TimezoneMapManager();
-        HashMap<String, String[]> timezoneMap = timezoneMapManager.getTimezoneMap();
+        TimezoneMapManagerA timezoneMapManagerA = new TimezoneMapManagerA();
+        HashMap<String, String[]> timezoneMap = timezoneMapManagerA.getTimezoneMap();
         timezoneArrayA = timezoneMap.get("Regions");
         timezoneArrayB = timezoneMap.get("Regions");
 
@@ -163,8 +164,14 @@ public class TimeConverterFragment extends Fragment {
         Time time = new Time();
         time.setToNow();
         time.format3339(true);//Set the time object to use 24-hour time format
-        hoursFromEditText.setText(String.valueOf(time.hour));
-        minutesFromEditText.setText(String.valueOf(time.minute));
+
+        final int hours = time.hour;
+        String hoursAsText = hours<10 ? "0" + String.valueOf(time.hour) : String.valueOf(time.hour);
+        hoursFromEditText.setText(hoursAsText);
+
+        final int minutes = time.minute;
+        String minutesAsText = minutes<10 ? "0" + String.valueOf(time.minute) : String.valueOf(time.minute);
+        minutesFromEditText.setText(minutesAsText);
     }
 
     /**

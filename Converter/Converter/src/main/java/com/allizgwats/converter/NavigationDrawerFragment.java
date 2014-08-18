@@ -92,7 +92,7 @@ public class NavigationDrawerFragment extends Fragment {
      * of the NavigationDrawerFragment class. (See below)
      */
     public static enum DrawerItemPositions {
-        TIMECONVERTER, WEIGHTCONVERTER, DISTANCECONVERTER
+        TIMECONVERTERA, TIMECONVERTERB, WEIGHTCONVERTER, DISTANCECONVERTER
     }
 
     @Override
@@ -111,7 +111,8 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.drawer_item_Time),
+                        getString(R.string.drawer_item_TimeA),
+                        getString(R.string.drawer_item_TimeB),
                         getString(R.string.drawer_item_Weight),
                         getString(R.string.drawer_item_Distance),
                 }));

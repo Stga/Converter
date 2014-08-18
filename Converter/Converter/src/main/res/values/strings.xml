@@ -4,7 +4,8 @@
     <string name="app_name">Converters</string>
 
     <!-- Title for conversion fragments of converter activity -->
-    <string name="drawer_item_Time">Time Converter</string>
+    <string name="drawer_item_TimeA">Time Converter A</string>
+    <string name="drawer_item_TimeB">Time Converter B</string>
     <string name="drawer_item_Weight">Weight Converter</string>
     <string name="drawer_item_Distance">Distance Converter</string>
 

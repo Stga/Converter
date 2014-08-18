@@ -2,25 +2,24 @@ package com.allizgwats.converter;
 
 import java.util.HashMap;
 
-class TimezoneMapManager {
+class TimezoneMapManagerA {
 
     private final HashMap<String, String[]> timezoneMap = new HashMap<String, String[]>();
 
-    public TimezoneMapManager() {
+    public TimezoneMapManagerA() {
+            //Put the World level data in the map (i.e. World Regions)
+            setRegionsInMap();
 
-        //Put the World level data in the map (i.e. World Regions)
-        setRegionsInMap();
+            //Put the Region level data in the map (i.e. Countries)
+            setCountriesInMap();
 
-        //Put the Region level data in the map (i.e. Countries)
-        setCountriesInMap();
-
-        //Put the Country level data in the map (i.e. Timezones of each country)
-        setAfricanTimezonesInMap();
-        setAmericasTimezonesInMap();
-        setAsianTimezonesInMap();
-        setAustralianOceaniaTimezoneInMap();
-        setEuropeanTimezoneInMap();
-        setTimezoneReadableAndIdsInMap();
+            //Put the Country level data in the map (i.e. Timezones of each country)
+            setAfricanTimezonesInMap();
+            setAmericasTimezonesInMap();
+            setAsianTimezonesInMap();
+            setAustralianOceaniaTimezoneInMap();
+            setEuropeanTimezoneInMap();
+            setTimezoneReadableAndIdsInMap();
     }
 
     public HashMap<String, String[]> getTimezoneMap() {
