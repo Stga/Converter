@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:padding="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:overScrollMode="never"
         android:background="@drawable/listview_border_shape"
         android:choiceMode="singleChoice"
@@ -181,17 +181,5 @@
             android:textColor="@color/timezoneBColor"
             android:longClickable="false"/>
     </LinearLayout>
-
-    <!--Converter button, when user presses this button, app will
-        attempt to get time information and convert from timezone A to B-->
-    <Button
-        android:id="@+id/timeConverter_convertInputButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="C"
-        android:layout_toRightOf="@id/timeConverter_llayoutOriginalTime_outer"
-        android:layout_toLeftOf="@id/timeConverter_llayoutConvertedTime"
-        android:layout_below="@id/timeConverter_llayoutTimezoneSelectors"
-        android:layout_marginTop="25dp"/>
 
 </RelativeLayout>

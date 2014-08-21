@@ -5,16 +5,23 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class WeightConverter extends Fragment{
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
+public class MassConverter extends Fragment{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -22,36 +29,36 @@ public class WeightConverter extends Fragment{
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     //Spinners that the user will use to select the metric they want to convert from and to
-    Spinner spinnerA;
-    Spinner spinnerB;
+    private Spinner spinnerA;
+    private Spinner spinnerB;
 
     //The converted metric will be placed into this TextView
-    TextView convertedWeightTextView;
+    private TextView convertedMassTextView;
 
     //The user will enter the number to be converted into this EditText
-    EditText originalWeightEditText;
+    private EditText originalMassEditText;
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public WeightConverter newInstance(int sectionNumber) {
-        WeightConverter fragment = new WeightConverter();
+    public MassConverter newInstance(int sectionNumber) {
+        MassConverter fragment = new MassConverter();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public WeightConverter() {
+    public MassConverter() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.weight_converter_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.converter_fragment, container, false);
 
-        attachListeners(rootView);
+        initializeViews(rootView);
 
         return rootView;
     }
@@ -63,18 +70,35 @@ public class WeightConverter extends Fragment{
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
-    private void attachListeners(View rootView) {
-        spinnerA = (Spinner) rootView.findViewById(R.id.weightConverter_spinnerA);
+    private void initializeViews(View rootView) {
+        String[] spinnerMetricsArray = getResources().getStringArray(R.array.weight_metrics);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                spinnerMetricsArray);
+
+        spinnerA = (Spinner) rootView.findViewById(R.id.converter_spinnerA);
+        spinnerA.setAdapter(spinnerAdapter);
         spinnerA.setOnItemSelectedListener(spinnerItemSelectedListener);
 
-        spinnerB = (Spinner) rootView.findViewById(R.id.weightConverter_spinnerB);
+        spinnerB = (Spinner) rootView.findViewById(R.id.converter_spinnerB);
+        spinnerB.setAdapter(spinnerAdapter);
         spinnerB.setOnItemSelectedListener(spinnerItemSelectedListener);
 
-        convertedWeightTextView = (TextView) rootView.findViewById(R.id.weightConverter_convertedWeightTextView);
+        convertedMassTextView = (TextView) rootView.findViewById(R.id.converter_convertedTextView);
 
-        originalWeightEditText = (EditText) rootView.findViewById(R.id.weightConverter_originalWeightEditText);
-        originalWeightEditText.addTextChangedListener(new CustomTextWatcher(originalWeightEditText));
+        originalMassEditText = (EditText) rootView.findViewById(R.id.converter_originalEditText);
+        originalMassEditText.setText("10");
+        originalMassEditText.addTextChangedListener(new CustomTextWatcher(originalMassEditText));
+        originalMassEditText.setOnEditorActionListener(massEditedListener);
+    }
 
+    /**
+     * Set the text of the convertedMassTextView TextView
+     * @param stringToSetInTextView the text to entry into the TextView
+     */
+    private void setconvertedMassTextView(String stringToSetInTextView) {
+        convertedMassTextView.setText(stringToSetInTextView);
     }
 
     /**
@@ -85,8 +109,11 @@ public class WeightConverter extends Fragment{
      */
     private void calculateDifferencesBetweenMetrics(int spinnerASelectedItemPosition,
                                                     int spinnerBSelectedItemPosition) {
+        if(originalMassEditText.getText().toString().equals("")) {
+            originalMassEditText.setText("0");
+        }
 
-        final double originalWeightInput = Double.parseDouble(originalWeightEditText.getText().toString());
+        final double originalWeightInput = Double.parseDouble(originalMassEditText.getText().toString());
         double convertedWeight = 0;
         String identifier = "";
 
@@ -133,10 +160,26 @@ public class WeightConverter extends Fragment{
                 break;
         }
 
-        String formattedConvertedWeight = String.format("%1$,.2f", convertedWeight);
-        convertedWeightTextView.setText(formattedConvertedWeight + identifier);
+
+        //Format the text by stripping all trailing zereos and adding in an identifier based on
+        //what unit was converted to.
+        String strippedConvertedWeight = new BigDecimal(convertedWeight)
+                .stripTrailingZeros().toPlainString();
+
+        //Format the String by adding in ',' in appropriate places
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        String formattedConvertedWeight = df.format(Double.parseDouble(strippedConvertedWeight));
+
+        setconvertedMassTextView(formattedConvertedWeight + identifier);
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Centigram.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Centigram
+     */
     private double convertToCentigram(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -177,6 +220,13 @@ public class WeightConverter extends Fragment{
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Decigram.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Decigram
+     */
     private double convertToDecigram(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -217,6 +267,13 @@ public class WeightConverter extends Fragment{
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Dekagram.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Dekagram
+     */
     private double convertToDekagram(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -250,13 +307,20 @@ public class WeightConverter extends Fragment{
                 convertedValueToReturn = orignalWeightInput*635.029318;
                 break;
             case 9: //Ton
-                convertedValueToReturn = orignalWeightInput*0.00635029;
+                convertedValueToReturn = orignalWeightInput*100000;
                 break;
         }
 
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Gram.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Gram
+     */
     private double convertToGram(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -297,6 +361,13 @@ public class WeightConverter extends Fragment{
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Kilogram.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Kilogram
+     */
     private double convertToKilogram(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -330,13 +401,20 @@ public class WeightConverter extends Fragment{
                 convertedValueToReturn = orignalWeightInput*6.35029;
                 break;
             case 9: //Ton
-                convertedValueToReturn = orignalWeightInput*907.185;
+                convertedValueToReturn = orignalWeightInput*1000;
                 break;
         }
 
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Milligram.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Milligram
+     */
     private double convertToMilligram(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -346,7 +424,7 @@ public class WeightConverter extends Fragment{
                 convertedValueToReturn = orignalWeightInput*10;
                 break;
             case 1: //Decigram
-                convertedValueToReturn = orignalWeightInput*001;
+                convertedValueToReturn = orignalWeightInput*100;
                 break;
             case 2: //Dekagram
                 convertedValueToReturn = orignalWeightInput*10000;
@@ -361,7 +439,7 @@ public class WeightConverter extends Fragment{
                 convertedValueToReturn = orignalWeightInput;
                 break;
             case 6: //Ounce
-                convertedValueToReturn = orignalWeightInput*0.000035274;
+                convertedValueToReturn = orignalWeightInput*28349.5;
                 break;
             case 7: //Pound
                 convertedValueToReturn = orignalWeightInput*453592;
@@ -377,6 +455,13 @@ public class WeightConverter extends Fragment{
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Ounce.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Ounce
+     */
     private double convertToOunce(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -410,13 +495,20 @@ public class WeightConverter extends Fragment{
                 convertedValueToReturn = orignalWeightInput*224;
                 break;
             case 9: //Ton
-                convertedValueToReturn = orignalWeightInput*35274;
+                convertedValueToReturn = orignalWeightInput*35273.9619;
                 break;
         }
 
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Pound.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Pound
+     */
     private double convertToPound(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -450,13 +542,20 @@ public class WeightConverter extends Fragment{
                 convertedValueToReturn = orignalWeightInput*14;
                 break;
             case 9: //Ton
-                convertedValueToReturn = orignalWeightInput*2204.62;
+                convertedValueToReturn = orignalWeightInput*2204.62262;
                 break;
         }
 
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Stone.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Stone
+     */
     private double convertToStone(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -497,6 +596,13 @@ public class WeightConverter extends Fragment{
         return convertedValueToReturn;
     }
 
+    /**
+     * Convert the currently set number in originalMassEditText from the metric selected
+     * in spinnerA to Metric Tonne.
+     * @param spinnerASelectedItemPosition The metric currently set in spinnerA
+     * @param orignalWeightInput The number currently entered into the originalMassEditText
+     * @return the converted weight from spinnerA metric to Metric Tonne
+     */
     private double convertToTon(int spinnerASelectedItemPosition, double orignalWeightInput) {
 
         double convertedValueToReturn = 0;
@@ -541,7 +647,7 @@ public class WeightConverter extends Fragment{
                             /*******************************
                              * LISTENERS BEYOND THIS POINT *
                              *******************************/
-    OnItemSelectedListener spinnerItemSelectedListener = new OnItemSelectedListener() {
+    private final OnItemSelectedListener spinnerItemSelectedListener = new OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             final int spinnerASelectedItem = spinnerA.getSelectedItemPosition();
@@ -556,20 +662,46 @@ public class WeightConverter extends Fragment{
     };
 
     /**
-     * Custom class for handling both hours and minutes inputting. Maintains minimum and maximum
-     * values allowed in an edit text. Assign leading zeroes to single digits is handled in
-     * the onEditorActionListener.
+     * OnEditorActionListener for the time input EditText's. Used for adding zero to replace
+     * empty string input
+     */
+    private final TextView.OnEditorActionListener massEditedListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView textView, int eventId, KeyEvent keyEvent) {
+            boolean isDone = eventId==EditorInfo.IME_ACTION_DONE
+                    || keyEvent.getAction() == KeyEvent.KEYCODE_BACK;
+
+            if(isDone && textView.getText() != null && !textView.getText().toString().equals("")) {
+                final int spinnerASelectedItem = spinnerA.getSelectedItemPosition();
+                final int spinnerBSelectedItem = spinnerB.getSelectedItemPosition();
+                calculateDifferencesBetweenMetrics(spinnerASelectedItem, spinnerBSelectedItem);
+
+                return false; //Close the keyboard
+            }
+
+            Toast.makeText(getActivity(), "Please enter a weight", Toast.LENGTH_SHORT).show();
+            return true; //Do not close keyboard
+        }
+    };
+
+    /**
+     * Custom class for user input into the originalMassEditText to ensure length of input
+     * does not exceed a maximum threshold and that it is not the empty string which would cause
+     * exception to be thrown due to automatic calculations that occur after editing the EditText.
      */
     private class CustomTextWatcher implements TextWatcher {
 
-        EditText editTextCaller;
+        private final EditText editTextCaller;
+        private String beforeTextChangedString;
 
         public CustomTextWatcher(EditText caller) {
             editTextCaller = caller;
         }
 
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            beforeTextChangedString = charSequence.toString();
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
@@ -578,19 +710,11 @@ public class WeightConverter extends Fragment{
         public void afterTextChanged(Editable editable) {
             final int maxLengthOfUserInput = 10;
             final int currentInputLength = editable.length();
-            final String maxInput = "9 999 999 999";
 
             if(currentInputLength > maxLengthOfUserInput) {
-                editTextCaller.setText(maxInput);
+                editTextCaller.setText(beforeTextChangedString);
+                Toast.makeText(getActivity(), "Maximum digits reached", Toast.LENGTH_SHORT).show();
             }
-            else if(currentInputLength == 0) {
-                editTextCaller.setText("0");
-            }
-
-            final int spinnerASelectedItem = spinnerA.getSelectedItemPosition();
-            final int spinnerBSelectedItem = spinnerB.getSelectedItemPosition();
-
-            calculateDifferencesBetweenMetrics(spinnerASelectedItem, spinnerBSelectedItem);
         }
     }
 

@@ -56,14 +56,17 @@ public class converter_activity extends ActionBarActivity
                     .replace(R.id.container, newUserSelectedFragment)
                     .commit();
         }
-        else if(position==NavigationDrawerFragment.DrawerItemPositions.WEIGHTCONVERTER.ordinal()) {
-            newUserSelectedFragment = new WeightConverter().newInstance(position);
+        else if(position==NavigationDrawerFragment.DrawerItemPositions.MASSCONVERTER.ordinal()) {
+            newUserSelectedFragment = new MassConverter().newInstance(position);
             fragmentManager.beginTransaction()
                     .replace(R.id.container, newUserSelectedFragment)
                     .commit();
         }
-        else if(position==NavigationDrawerFragment.DrawerItemPositions.DISTANCECONVERTER.ordinal()){
-            //TODO attach distance converter fragment if user selects distance converter from drawer
+        else if(position==NavigationDrawerFragment.DrawerItemPositions.LENGTHCONVERTER.ordinal()){
+            newUserSelectedFragment = new LengthConverter().newInstance(position);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, newUserSelectedFragment)
+                    .commit();
         }
     }
 
@@ -84,7 +87,7 @@ public class converter_activity extends ActionBarActivity
         }
     }
 
-    public void restoreActionBar() {
+    private void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);

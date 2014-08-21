@@ -5,5 +5,5 @@
     <!-- use this for time_converter_timezone_from_button_style background colour -->
     <solid android:color="#FFFFFF" />
     <stroke android:width="1dip" android:color="@android:color/secondary_text_dark" />
-    <corners android:radius="10dp"></corners>
+    <corners android:radius="10dp"/>
 </shape>

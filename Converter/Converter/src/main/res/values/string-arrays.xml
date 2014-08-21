@@ -12,4 +12,16 @@
         <item>Stone</item>
         <item>Ton</item>
     </string-array>
+
+    <string-array name="length_metrics">
+        <item>Kilometer </item>
+        <item>Meter </item>
+        <item>Centimeter </item>
+        <item>Millimeter </item>
+        <item>Mile</item>
+        <item>Yard </item>
+        <item>Foot </item>
+        <item>Inch</item>
+        <item>Nautical Mile</item>
+    </string-array>
 </resources>

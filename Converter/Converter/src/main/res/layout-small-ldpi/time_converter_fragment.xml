@@ -24,9 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:padding="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="1dp"
         android:overScrollMode="never"
         android:background="@drawable/listview_border_shape"
+        android:layout_below="@id/timeConverter_timezoneSelectorTextView"
         android:choiceMode="singleChoice"
         android:duplicateParentState="true"
         android:animateLayoutChanges="true"
@@ -38,7 +39,7 @@
         android:id="@+id/timeConverter_llayoutTimezoneSelectors"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="1dp"
         android:layout_alignRight="@id/timeConverter_timezoneSelectorListView"
         android:layout_alignLeft="@id/timeConverter_timezoneSelectorListView"
         android:layout_below="@id/timeConverter_timezoneSelectorListView"
@@ -85,7 +86,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:layout_below="@id/timeConverter_llayoutTimezoneSelectors"
         android:background="@drawable/listview_border_shape">
 
@@ -115,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:text="@string/timeConverter_defaultFromUiTimes"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_gravity="center"
                 android:minEms="1"
                 android:textColor="@color/timezoneAColor"
@@ -128,7 +129,7 @@
                 android:text="@string/timeConverter_timesDivider"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:textSize="35sp"
+                android:textSize="20sp"
                 android:textColor="@color/timezoneAColor"/>
 
             <EditText
@@ -137,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:text="@string/timeConverter_defaultFromUiTimes"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_gravity="center"
                 android:textColor="@color/timezoneAColor"
                 android:imeOptions="actionDone"/>
@@ -152,7 +153,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:padding="10dp"
         android:layout_below="@id/timeConverter_llayoutTimezoneSelectors"
         android:layout_alignRight="@id/timeConverter_llayoutTimezoneSelectors"
@@ -175,23 +176,11 @@
             android:layout_height="wrap_content"
             android:text="@string/timeConverter_defaultToUiTime"
             android:layout_gravity="center"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_marginTop="5dp"
             android:clickable="false"
             android:textColor="@color/timezoneBColor"
             android:longClickable="false"/>
     </LinearLayout>
-
-    <!--Converter button, when user presses this button, app will
-        attempt to get time information and convert from timezone A to B-->
-    <Button
-        android:id="@+id/timeConverter_convertInputButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="C"
-        android:layout_toRightOf="@id/timeConverter_llayoutOriginalTime_outer"
-        android:layout_toLeftOf="@id/timeConverter_llayoutConvertedTime"
-        android:layout_below="@id/timeConverter_llayoutTimezoneSelectors"
-        android:layout_marginTop="25dp"/>
 
 </RelativeLayout>

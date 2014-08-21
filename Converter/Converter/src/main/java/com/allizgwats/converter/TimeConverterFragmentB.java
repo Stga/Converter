@@ -125,9 +125,6 @@ public class TimeConverterFragmentB extends Fragment {
         timezoneBIdentifierText = (TextView) rootView
                 .findViewById(R.id.timeConverter_timezoneBIdentifierText);
 
-        Button convertTimeButton = (Button) rootView.findViewById(R.id.timeConverter_convertInputButton);
-        convertTimeButton.setOnClickListener(convertTimeButtonListener);
-
         timezonesListView = (ListView) rootView.findViewById
                 (R.id.timeConverter_timezoneSelectorListView);
         timezonesListView.setOnItemClickListener(timezoneListViewListener);
@@ -159,36 +156,46 @@ public class TimeConverterFragmentB extends Fragment {
     /**
      * Calculate the difference between a users selected time and two user selected timezones
      * (hoursFromEditText/minutesFromEditText, timezoneA/timezoneB).
-     * @return String representation of the users input time after conversion from timezoneA
-     *         to timezoneB
      */
-    private String calculateTimezoneDifferences() {
-        //Create a new calendar instance using the user selected timezoneA.
-        //Set the time of day using the user input times from EditTexts.
-        GregorianCalendar fromCal = new GregorianCalendar(TimeZone.getTimeZone(timezoneA));
-        fromCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hoursFromEditText.getText().toString()));
-        fromCal.set(Calendar.MINUTE, Integer.parseInt(minutesFromEditText.getText().toString()));
+    private void calculateTimezoneDifferences() {
+        //If both Timezones are set, do the time conversion. Otherwise inform the user which
+        //timezone they are missing.
+        if(timezoneA==null) {
+            Toast.makeText(getActivity(), "Please select a TimezoneA item",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if(timezoneB==null) {
+            Toast.makeText(getActivity(), "Please select a TimezoneB item",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else {
+            //Create a new calendar instance using the user selected timezoneA.
+            //Set the time of day using the user input times from EditTexts.
+            GregorianCalendar fromCal = new GregorianCalendar(TimeZone.getTimeZone(timezoneA));
+            fromCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hoursFromEditText.getText().toString()));
+            fromCal.set(Calendar.MINUTE, Integer.parseInt(minutesFromEditText.getText().toString()));
 
-        //Get the user selected timezoneB and create a new calendar of this timezone.
-        //Using the previous calendars current time in milliseconds an easy conversion can be
-        //made to the new timezone by simply setting them to the "same" time.
-        GregorianCalendar toCal = new GregorianCalendar(TimeZone.getTimeZone(timezoneB));
-        toCal.setTimeInMillis(fromCal.getTimeInMillis());
+            //Get the user selected timezoneB and create a new calendar of this timezone.
+            //Using the previous calendars current time in milliseconds an easy conversion can be
+            //made to the new timezone by simply setting them to the "same" time.
+            GregorianCalendar toCal = new GregorianCalendar(TimeZone.getTimeZone(timezoneB));
+            toCal.setTimeInMillis(fromCal.getTimeInMillis());
 
-        //Get String representations of the converted time from the relevant calendar.
-        //These will be concatenated into a single String to be returned and placed into the
-        //converted time TextView shown to the user.
-        final String convertedHours = String.valueOf(toCal.get(Calendar.HOUR_OF_DAY));
-        final String convertedMinutes = String.valueOf(toCal.get(Calendar.MINUTE));
-        String convertedTimeDisplay;
+            //Get String representations of the converted time from the relevant calendar.
+            //These will be concatenated into a single String to be returned and placed into the
+            //converted time TextView shown to the user.
+            final String convertedHours = String.valueOf(toCal.get(Calendar.HOUR_OF_DAY));
+            final String convertedMinutes = String.valueOf(toCal.get(Calendar.MINUTE));
+            String convertedTimeDisplay;
 
-        //Concatenate time and add leading zeroes to any single digit number to keep the displayed
-        //times consistent across all timezone conversions.
-        convertedTimeDisplay = toCal.get(Calendar.HOUR_OF_DAY)<10 ? "0"+convertedHours : convertedHours;
-        convertedTimeDisplay += ":";
-        convertedTimeDisplay += toCal.get(Calendar.MINUTE)<10 ? "0"+convertedMinutes : convertedMinutes;
+            //Concatenate time and add leading zeroes to any single digit number to keep the displayed
+            //times consistent across all timezone conversions.
+            convertedTimeDisplay = toCal.get(Calendar.HOUR_OF_DAY) < 10 ? "0" + convertedHours : convertedHours;
+            convertedTimeDisplay += ":";
+            convertedTimeDisplay += toCal.get(Calendar.MINUTE) < 10 ? "0" + convertedMinutes : convertedMinutes;
 
-        return convertedTimeDisplay;
+            setConvertedTime(convertedTimeDisplay);
+        }
     }
 
     /**
@@ -290,31 +297,6 @@ public class TimeConverterFragmentB extends Fragment {
      *      ***LISTENERS BEYOND THIS POINT - BEWARE ALL YE WHO VENTURE FORTH***
      *      *******************************************************************
      *
-     /**
-     * Listener for the button the user presses to convert input time from timezone A to timezone B.
-     * This should simply redirect to another method that will handle the parse from strings to
-     * integers and timezone conversions.
-     */
-    private View.OnClickListener convertTimeButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            //If both Timezones are set, do the time conversion. Otherwise inform the user which
-            //timezone they are missing.
-            if(timezoneA==null) {
-                Toast.makeText(getActivity(), "Please select a \'From\' Timezone",
-                        Toast.LENGTH_SHORT).show();
-            }
-            else if(timezoneB==null) {
-                Toast.makeText(getActivity(), "Please select a \'To\' Timezone",
-                        Toast.LENGTH_SHORT).show();
-            }
-            else {
-                setConvertedTime(calculateTimezoneDifferences());
-            }
-        }
-    };
-
     /**
      * OnClickListener for the timezones ListView.
      * This is used for navigating through the timezone ListView selection and
@@ -322,7 +304,7 @@ public class TimeConverterFragmentB extends Fragment {
      * highlighting the choices the user makes after selection and when returning to the ListView
      * after leaving it.
      */
-    private AdapterView.OnItemClickListener timezoneListViewListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener timezoneListViewListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -343,6 +325,10 @@ public class TimeConverterFragmentB extends Fragment {
                 //Highlight the selected item and change the color of the text within it
                 timezonesListView.requestFocusFromTouch();
                 timezonesListView.setSelection(positionOfPreviouslySelectedItemInListViewA);
+
+                Toast.makeText(getActivity(), "TimezoneA set to: " + timezoneA,
+                        Toast.LENGTH_SHORT).show();
+                calculateTimezoneDifferences();
             }
 
             //An item in timezoneB list has been selected
@@ -352,12 +338,15 @@ public class TimeConverterFragmentB extends Fragment {
                 timezoneB = selectedItemInListView.getText().toString();
                 timezoneBIdentifierText.setText(timezoneB);
 
-
                 positionOfPreviouslySelectedItemInListViewB = i;
 
                 //Highlight the selected item and change the color of the text within it
                 timezonesListView.requestFocusFromTouch();
                 timezonesListView.setSelection(positionOfPreviouslySelectedItemInListViewB);
+
+                Toast.makeText(getActivity(), "TimezoneB set to: " + timezoneB,
+                        Toast.LENGTH_SHORT).show();
+                calculateTimezoneDifferences();
             }
         }
     };
@@ -366,7 +355,7 @@ public class TimeConverterFragmentB extends Fragment {
      * OnEditorActionListener for the time input EditText's. Used for adding leading zeros to
      * single-digit inputs after the user has selected done on the keyboard.
      */
-    private TextView.OnEditorActionListener timeEditedListener = new TextView.OnEditorActionListener() {
+    private final TextView.OnEditorActionListener timeEditedListener = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView textView, int eventId, KeyEvent keyEvent) {
             boolean isDone = eventId== EditorInfo.IME_ACTION_DONE
@@ -378,6 +367,8 @@ public class TimeConverterFragmentB extends Fragment {
                 if(usersInputStringAsInt>=0 && usersInputStringAsInt<10) {
                     textView.setText("0" + usersInputStringAsInt);
                 }
+
+                calculateTimezoneDifferences();
                 return false; //Close the keyboard
             }
 
@@ -390,7 +381,7 @@ public class TimeConverterFragmentB extends Fragment {
      * Listener for displaying the timezone which corresponds with the button the user has pressed
      * i.e. show the From list if the From button is selected and vice versa.
      */
-    private View.OnClickListener showTimezonesButtonListener = new View.OnClickListener() {
+    private final View.OnClickListener showTimezonesButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             //Find which timezone button the user has pressed
@@ -409,7 +400,7 @@ public class TimeConverterFragmentB extends Fragment {
      */
     private class CustomTextWatcher implements TextWatcher {
 
-        private EditText editTextCaller;
+        private final EditText editTextCaller;
 
         public CustomTextWatcher(EditText caller) {
             editTextCaller = caller;
@@ -444,6 +435,7 @@ public class TimeConverterFragmentB extends Fragment {
             }
 
             if(mustSanitizeInput) {
+                Toast.makeText(getActivity(), toastText, Toast.LENGTH_SHORT).show();
                 editable.clear();
                 editable.insert(0, sanityUpdateText);
             }
