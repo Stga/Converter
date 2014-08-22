@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Converters</string>
+
+    <!-- Title for conversion fragments of converter activity -->
+    <string name="drawer_item_TimeA">Time Converter A</string>
+    <string name="drawer_item_TimeB">Time Converter B</string>
+    <string name="drawer_item_Weight">Mass Converter</string>
+    <string name="drawer_item_Distance">Length Converter</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Time converter string resources -->
+    <string name="timeConverter_defaultFromUiTimes">00</string>
+    <string name="timeConverter_timesDivider">:</string>
+    <string name="timeConverter_defaultToUiTime">00:00</string>
+    <string name="timeConverter_timezoneAIdentifierText">Timezone A</string>
+    <string name="timeConverter_timezoneBIdentifierText">Timezone B</string>
+
+    <!-- Other converter resources -->
+    <string name="converter_DefaultEditTexts">10</string>
+
+</resources>
