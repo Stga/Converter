@@ -108,7 +108,7 @@ public class AreaConverterFragment extends Fragment{
         switch(spinnerBSelectedItemPosition) {
             case 0: //SquareKm
                 convertedArea = convertToSquareKm(spinnerASelectedItemPosition, originalAreaInput);
-                identifier = "Sq Km";
+                identifier = "SqKm";
                 break;
             case 1: //Hectare
                 convertedArea = convertToHectare(spinnerASelectedItemPosition, originalAreaInput);
@@ -116,27 +116,27 @@ public class AreaConverterFragment extends Fragment{
                 break;
             case 2: //SquareMeter
                 convertedArea = convertToSquareMeter(spinnerASelectedItemPosition, originalAreaInput);
-                identifier = "Sq M";
+                identifier = "SqM";
                 break;
             case 3: //SquareMile
                 convertedArea = convertToSquareMile(spinnerASelectedItemPosition, originalAreaInput);
-                identifier = "Sq Mi";
+                identifier = "SqMi";
                 break;
             case 4: //Acre
                 convertedArea = convertToAcre(spinnerASelectedItemPosition, originalAreaInput);
-                identifier = "ac";
+                identifier = "Ac";
                 break;
             case 5: //SquareYard
                 convertedArea = convertToSquareYard(spinnerASelectedItemPosition, originalAreaInput);
-                identifier = "Sq Yd";
+                identifier = "SqYd";
                 break;
             case 6: //SquareFoot
                 convertedArea = convertToSquareFoot(spinnerASelectedItemPosition, originalAreaInput);
-                identifier = "Sq Ft";
+                identifier = "SqFt";
                 break;
             case 7: //SquareInch
                 convertedArea = convertToSquareInch(spinnerASelectedItemPosition, originalAreaInput);
-                identifier = "Sq In";
+                identifier = "SqIn";
                 break;
         }
 
