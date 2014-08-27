@@ -21,11 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-/**
- * Fragment used for managing interactions for and presentation of a navigation drawer.
- * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
- * design guidelines</a> for a complete explanation of the behaviors implemented here.
- */
 public class NavigationDrawerFragment extends Fragment {
 
     /**
@@ -91,7 +86,8 @@ public class NavigationDrawerFragment extends Fragment {
      * of the NavigationDrawerFragment class. (See below)
      */
     public static enum DrawerItemPositions {
-        TIMECONVERTERA, TIMECONVERTERB, MASSCONVERTER, LENGTHCONVERTER
+        TIMECONVERTERA, TIMECONVERTERB, MASSCONVERTER, LENGTHCONVERTER,
+        TEMPERATURECONVERTER, SPEEDCONVERTER, AREACONVERTER
     }
 
     @Override
@@ -114,6 +110,9 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.drawer_item_TimeB),
                         getString(R.string.drawer_item_Weight),
                         getString(R.string.drawer_item_Distance),
+                        getString(R.string.drawer_item_Temperature),
+                        getString(R.string.drawer_item_Speed),
+                        getString(R.string.drawer_item_Area)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

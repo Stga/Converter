@@ -56,13 +56,31 @@ public class converter_activity extends ActionBarActivity
                     .commit();
         }
         else if(position==NavigationDrawerFragment.DrawerItemPositions.MASSCONVERTER.ordinal()) {
-            newUserSelectedFragment = new MassConverter().newInstance(position);
+            newUserSelectedFragment = new MassConverterFragment().newInstance(position);
             fragmentManager.beginTransaction()
                     .replace(R.id.container, newUserSelectedFragment)
                     .commit();
         }
         else if(position==NavigationDrawerFragment.DrawerItemPositions.LENGTHCONVERTER.ordinal()){
-            newUserSelectedFragment = new LengthConverter().newInstance(position);
+            newUserSelectedFragment = new LengthConverterFragment().newInstance(position);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, newUserSelectedFragment)
+                    .commit();
+        }
+        else if(position==NavigationDrawerFragment.DrawerItemPositions.TEMPERATURECONVERTER.ordinal()){
+            newUserSelectedFragment = new TemperatureConverterFragment().newInstance(position);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, newUserSelectedFragment)
+                    .commit();
+        }
+        else if(position==NavigationDrawerFragment.DrawerItemPositions.SPEEDCONVERTER.ordinal()){
+            newUserSelectedFragment = new SpeedConverterFragment().newInstance(position);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, newUserSelectedFragment)
+                    .commit();
+        }
+        else if(position==NavigationDrawerFragment.DrawerItemPositions.AREACONVERTER.ordinal()){
+            newUserSelectedFragment = new AreaConverterFragment().newInstance(position);
             fragmentManager.beginTransaction()
                     .replace(R.id.container, newUserSelectedFragment)
                     .commit();
@@ -82,6 +100,15 @@ public class converter_activity extends ActionBarActivity
                 break;
             case 3:
                 mTitle = getString(R.string.drawer_item_Distance);
+                break;
+            case 4:
+                mTitle = getString(R.string.drawer_item_Temperature);
+                break;
+            case 5:
+                mTitle = getString(R.string.drawer_item_Speed);
+                break;
+            case 6:
+                mTitle = getString(R.string.drawer_item_Area);
                 break;
         }
     }

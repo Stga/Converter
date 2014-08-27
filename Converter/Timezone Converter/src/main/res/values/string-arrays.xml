@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="weight_metrics">
+    <string-array name="mass_metrics">
         <item>Centigram </item>
         <item>Decigram </item>
         <item>Dekagram </item>
@@ -23,5 +23,30 @@
         <item>Foot </item>
         <item>Inch</item>
         <item>Nautical Mile</item>
+    </string-array>
+
+    <string-array name="temperature_metrics">
+        <item>Celsius </item>
+        <item>Fahrenheit </item>
+        <item>Kelvin </item>
+    </string-array>
+
+    <string-array name="speed_metrics">
+        <item>Miles/hour </item>
+        <item>Feet/sec </item>
+        <item>Meters/sec </item>
+        <item>Km/hour </item>
+        <item>Knot</item>
+    </string-array>
+
+    <string-array name="area_metrics">
+        <item>Square Km </item>
+        <item>Hectare </item>
+        <item>Square Meter </item>
+        <item>Square Mile </item>
+        <item>Acre</item>
+        <item>Square Yard </item>
+        <item>Square Foot </item>
+        <item>Square Inch</item>
     </string-array>
 </resources>

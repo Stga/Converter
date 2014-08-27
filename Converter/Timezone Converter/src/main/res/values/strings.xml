@@ -8,6 +8,9 @@
     <string name="drawer_item_TimeB">Time Converter B</string>
     <string name="drawer_item_Weight">Mass Converter</string>
     <string name="drawer_item_Distance">Length Converter</string>
+    <string name="drawer_item_Temperature">Temperature Converter</string>
+    <string name="drawer_item_Speed">Speed Converter</string>
+    <string name="drawer_item_Area">Area Converter</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
